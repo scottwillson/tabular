@@ -12,8 +12,12 @@ sudo gem install tabular
 Dependencies
 ------------
 For tab-delimited data: Ruby standard lib
-For CSV: FasterCSV
-For Excel: Spreadsheet gem
+
+For CSV: FasterCSV (http://fastercsv.rubyforge.org/)
+sudo gem install fastercsv
+
+For Excel: Spreadsheet gem (http://spreadsheet.rubyforge.org/)
+sudo gem install spreadsheet
 
 
 Examples
