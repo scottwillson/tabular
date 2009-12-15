@@ -11,6 +11,7 @@ begin
     gemspec.homepage = "http://github.com/scottwillson/tabular"
     gemspec.authors = ["Scott Willson"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end

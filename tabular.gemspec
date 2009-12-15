@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/tabular/row.rb",
      "lib/tabular/support/object.rb",
      "lib/tabular/table.rb",
+     "tabular.gemspec",
      "test/column_test.rb",
      "test/columns_test.rb",
      "test/fixtures/blank.txt",

@@ -2,6 +2,12 @@ Tabular is a Ruby library for reading, writing, and manipulating CSV, tab-delimi
 
 I extracted it from production code. Still extracting it, actually. I need to read structured data and manipulate it via a common interface before persisting it with ActiveRecord.
 
+Install
+-------
+sudo gem install tabular
+
+(The gem is hosted on Gemcutter, not RubyForge)
+
 
 Dependencies
 ------------
