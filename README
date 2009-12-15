@@ -38,3 +38,9 @@ Table.new also accepts an options hash. Currently, :columns is the only option. 
 Tests
 -----
 There's basic test coverage. More comprehensive test coverage needs to be extracted from original projects. Run 'rake test'.
+
+
+Copyright
+---------
+
+Copyright (c) 2009 Scott Willson. See LICENSE for details.
