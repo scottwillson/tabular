@@ -33,10 +33,19 @@ module Tabular
         end
       when :txt
         require "csv"
-        data = ::CSV.open(file_path, "r","\t").collect { |row| row }
+        if RUBY_VERSION < "1.9"
+          data = ::CSV.open(file_path, "r","\t").collect { |row| row }
+        else
+          data = CSV.read(file_path)
+        end
       when :csv
-        require "fastercsv"
-        data = FasterCSV.read(file_path)
+        if RUBY_VERSION < "1.9"
+          require "fastercsv"
+          data = FasterCSV.read(file_path)
+        else
+          require "csv"
+          data = CSV.read(file_path)
+        end
       else
         raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
       end
