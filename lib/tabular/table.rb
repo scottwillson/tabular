@@ -3,9 +3,17 @@ module Tabular
   class Table
     attr_reader :rows
     
+    # +file+ : file path as String or File
     # Assumes .txt = tab-delimited, .csv = CSV, .xls = Excel. Assumes first row is the header.
     # Normalizes column names to lower-case with underscores.
-    def self.read(file_path, *options)
+    def self.read(file, *options)
+      file_path = case file
+      when File
+         file.path
+      else
+        file
+      end
+      
       raise "Could not find '#{file_path}'" unless File.exists?(file_path)
       options = extract_options(options)
       
