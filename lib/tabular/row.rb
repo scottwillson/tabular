@@ -83,7 +83,12 @@ module Tabular
                 begin
                   @hash[column.key] = Date.parse(@array[index], true)
                 rescue ArgumentError => e
-                  raise ArgumentError, "'#{@array[index]}' is not a valid date"
+                  date = parse_invalid_date(@array[index])
+                  if date
+                    @hash[column.key] = date
+                  else
+                    raise ArgumentError, "'#{@array[index]}' is not a valid date"
+                  end
                 end
               end
             else
@@ -93,6 +98,34 @@ module Tabular
         end
       end
       @hash
+    end
+    
+    
+    private
+    
+    # Handle common m/d/yy case that Date.parse dislikes
+    def parse_invalid_date(value)
+      return unless value
+      
+      parts = value.split("/")
+      return unless parts.size == 3
+
+      month = parts[0].to_i
+      day = parts[1].to_i
+      year = parts[2].to_i
+      return unless month >=1 && month <= 12 && day >= 1 && day <= 31
+
+      if year == 0
+        year = 2000
+      elsif year > 0 && year < 69
+        year = 2000 + year
+      elsif year > 69 && year < 100
+        year = 1900 + year
+      elsif year < 1900 || year > 2050
+        return nil
+      end
+      
+      Date.new(year, month, day)
     end
   end
 end
