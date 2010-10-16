@@ -1,3 +1,5 @@
+require "date"
+
 module Tabular
   # Associate list of cells. Each Table has a list of Rows. Access Row cells via symbols. Ex: row[:city]
   class Row
@@ -78,7 +80,11 @@ module Tabular
               if @array[index].is_a?(Date) || @array[index].is_a?(DateTime) || @array[index].is_a?(Time)
                 @hash[column.key] = @array[index]
               else
-                @hash[column.key] = Date.parse(@array[index], true)
+                begin
+                  @hash[column.key] = Date.parse(@array[index], true)
+                rescue ArgumentError => e
+                  raise ArgumentError, "'#{@array[index]}' is not a valid date"
+                end
               end
             else
               @hash[column.key] = @array[index]

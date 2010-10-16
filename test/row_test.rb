@@ -60,6 +60,18 @@ module Tabular
       assert_equal nil, table.rows.first.previous, "previous of first Row"
       assert_equal "Mars", table.rows.last.previous[:planet], "previous"
     end
+    
+    def test_invalid_date
+      data = [
+        [ "launched" ],
+        [ "1/1/99" ]
+      ]
+      table = Table.new(data, :columns => { :launched => { :column_type => :date } })
+      row = Row.new(table, [ "1/1/99" ])
+      assert_raise ArgumentError do
+        row[:launched]
+      end
+    end
   end
 end
 
