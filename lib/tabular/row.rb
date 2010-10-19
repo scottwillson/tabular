@@ -81,7 +81,11 @@ module Tabular
                 @hash[column.key] = @array[index]
               else
                 begin
-                  @hash[column.key] = Date.parse(@array[index], true)
+                  if @array[index]
+                    @hash[column.key] = Date.parse(@array[index], true)
+                  else
+                    @hash[column.key] = nil
+                  end
                 rescue ArgumentError => e
                   date = parse_invalid_date(@array[index])
                   if date
