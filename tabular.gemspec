@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{tabular}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Scott Willson"]
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
      "test/columns_test.rb",
      "test/fixtures/blank.txt",
      "test/fixtures/excel.xls",
+     "test/fixtures/quoted.txt",
      "test/fixtures/sample.csv",
      "test/fixtures/sample.lif",
      "test/helper.rb",
