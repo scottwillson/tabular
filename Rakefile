@@ -23,11 +23,9 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-task :test => :check_dependencies
-
 task :default => :test
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
