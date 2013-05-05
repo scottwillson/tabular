@@ -57,5 +57,32 @@ module Tabular
       assert_equal "Team Z", table.rows.first[:team], ":team"
       assert_equal true, table.rows.first[:homme], "boolean"
     end
+
+    def test_row_mapper_class_method
+      data = [
+        [ :place, "1", :name, "Bernard Hinault" ],
+      ]
+
+      table = Table.new
+      table.row_mapper = StatelessTestMapper
+      table.rows = data
+      
+      assert_equal 1, table.rows.size, "size"
+      assert_equal({ :place => "1", :name => "Bernard Hinault" }, table.rows[0].to_hash)
+    end
+    
+    def test_row_mapper
+      data = [
+        [ :place, "1", :name, "Bernard Hinault" ],
+      ]
+
+      table = Table.new
+      table.row_mapper = TestMapper.new
+      table.rows = data
+      
+      assert_equal 1, table.rows.size, "size"
+      assert_equal({ :place => "1", :name => "Bernard Hinault" }, table.rows[0].to_hash)
+    end
+    
   end
 end

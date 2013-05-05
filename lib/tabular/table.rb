@@ -2,6 +2,7 @@ module Tabular
   # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file.
   class Table
     attr_reader :rows
+    attr_accessor :row_mapper
     
     # +file+ : file path as String or File
     # Assumes .txt = tab-delimited, .csv = CSV, .xls = Excel. Assumes first row is the header.
@@ -79,6 +80,11 @@ module Tabular
     end
     
     def <<(row)
+      if row_mapper
+        cells = row_mapper.map(row)
+      else
+        cells = row
+      end
       @rows << Tabular::Row.new(self, row)
     end
     
