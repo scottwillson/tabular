@@ -67,12 +67,27 @@ module Tabular
       @options = Table.extract_options(options)
       self.rows = rows
 
-     rows.each do |row|
-       if @columns
-         self << row
-       else
-         @columns = Tabular::Columns.new(row, options[:columns])
+      rows.each do |row|
+        if @columns
+          self << row
+        else
+          @columns = Tabular::Columns.new(row, options[:columns])
+        end
       end
+    end
+
+    def rows
+      @rows ||= []
+    end
+    
+    def rows=(source_rows = [])
+      return [] unless source_rows
+      
+      source_rows.each do |row|
+        self.<< row
+      end
+      
+      rows
     end
 
     # Return Row at zero-based index, or nil if Row is out of bounds
@@ -86,7 +101,18 @@ module Tabular
       else
         cells = row
       end
-      @rows << Tabular::Row.new(self, row)
+
+      if @columns.nil? && !cells.respond_to?(:keys)
+        @columns = Tabular::Columns.new(self, cells, options[:columns])
+        return columns
+      end
+
+      _row = Tabular::Row.new(self, cells, row)
+      _row.keys.each do |key|
+        columns << key
+      end
+      rows << _row
+      _row
     end
 
     def inspect

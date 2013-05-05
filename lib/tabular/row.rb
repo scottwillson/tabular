@@ -7,14 +7,26 @@ module Tabular
     include Tabular::Keys
 
     attr_reader :index
+    attr_reader :source
 
     # +table+ -- Table
     # +cells+ -- array (not neccessarily Strings)
     # +source+ -- original data before mapped to Hash or Array (optional)
     def initialize(table, cells = [], source = nil)
       @table = table
-      @array = cells
-      @hash = nil
+      @source = source || cells
+
+      if cells.respond_to?(:keys)
+        @array = cells.values
+        @hash = {}
+        cells.each do |key, value|
+          @hash[key_to_sym(key)] = value
+        end
+      else
+        @array = cells
+        @hash = nil
+      end
+
       @index = table.rows.size
     end
 
