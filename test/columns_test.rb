@@ -50,6 +50,20 @@ module Tabular
       assert_equal "Date", columns.first.render
     end
 
+    def test_delete
+      columns = Columns.new(nil, ["date", "first name", "LastName"])
+      columns.delete :date
+      
+      columns_from_each = []
+      columns.each { |c| columns_from_each << c.key }
+      assert_equal [ :first_name, :last_name ], columns_from_each, "column keys from #each"
+
+      assert_equal false, columns.has_key?(:date), "has_key? :date"
+      assert_equal true, columns.has_key?(:first_name), "has_key? :first_name"
+      assert_equal 0, columns.index(:first_name), "index of :first_name"
+      assert_equal 1, columns.index(:last_name), "index of :last_name"
+    end
+
     def test_push_onto_blank
       columns = Columns.new([])
       columns << "city state"

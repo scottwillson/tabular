@@ -50,6 +50,16 @@ module Tabular
       rows.map { |r| r[key] }
     end
 
+    def delete(key)
+      @columns.delete_if { |column| column.key == key }
+      @columns_by_key.delete key
+      @column_indexes.delete key
+
+      @columns.each.with_index do |column, index|
+        @column_indexes[column.key] = index
+      end
+    end
+
     def max
       cells.compact.max
     end
