@@ -59,13 +59,17 @@ module Tabular
       @columns << column
     end
 
+    def max
+      cells.compact.max
+    end
+
     def renderer(key)
       renderers[key] || @renderer || Renderer
     end
 
     def renderers
       @renderers ||= {}
-   end
+    end
 
 
     private
