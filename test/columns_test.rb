@@ -13,7 +13,7 @@ module Tabular
     end
 
     def test_new
-      columns = Columns.new(["date", "first name", "LastName"])
+      columns = Columns.new(nil, ["date", "first name", "LastName"])
       assert_equal false, columns.has_key?(:location), "has_key? :location"
       assert_equal true, columns.has_key?(:date), "has_key? :date"
       assert_equal true, columns.has_key?(:first_name), "has_key? :first_name"
@@ -68,7 +68,7 @@ module Tabular
     end
 
     def test_push
-      columns = Columns.new(["first", "second"])
+      columns = Columns.new(nil, ["first", "second"])
       columns << "third"
       assert_equal true, columns.has_key?(:third), "has_key? :third"
       assert_equal 0, columns.index(:first), "index of existing column"
