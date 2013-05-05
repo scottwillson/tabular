@@ -27,6 +27,12 @@ module Tabular
       end
     end
 
+    # Is the a Column with this key? Keys are lower-case, underscore symbols.
+    # Example: :postal_code
+    def has_key?(key)
+      @columns.any? { |column| column.key == key }
+    end
+
     def delete(key)
       @columns.delete_if { |column| column.key == key }
       @columns_by_key.delete key
@@ -35,12 +41,6 @@ module Tabular
       @columns.each.with_index do |column, index|
         @column_indexes[column.key] = index
       end
-    end
-
-    # Is the a Column with this key? Keys are lower-case, underscore symbols.
-    # Example: :postal_code
-    def has_key?(key)
-      @columns.any? { |column| column.key == key }
     end
 
     # Column for +key+
