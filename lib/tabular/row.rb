@@ -51,6 +51,15 @@ module Tabular
       @array.each(&block)
     end
 
+    # Call +block+ for each cell
+    def each_with_key(&block)
+      hash.each(&block)
+    end
+    
+    def keys
+      hash.keys
+    end
+
     # For pretty-printing cell values
     def join(sep = nil)
       @array.join(sep)
