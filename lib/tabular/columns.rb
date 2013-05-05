@@ -33,16 +33,6 @@ module Tabular
       @columns.any? { |column| column.key == key }
     end
 
-    def delete(key)
-      @columns.delete_if { |column| column.key == key }
-      @columns_by_key.delete key
-      @column_indexes.delete key
-
-      @columns.each.with_index do |column, index|
-        @column_indexes[column.key] = index
-      end
-    end
-
     # Column for +key+
     def [](key)
       @columns_by_key[key_to_sym(key)]
@@ -67,6 +57,20 @@ module Tabular
         @columns_by_key[column.key] = column
       end
       @columns << column
+    end
+
+    def delete(key)
+      @columns.delete_if { |column| column.key == key }
+      @columns_by_key.delete key
+      @column_indexes.delete key
+
+      @columns.each.with_index do |column, index|
+        @column_indexes[column.key] = index
+      end
+    end
+
+    def size
+      @columns.size
     end
 
     def max
