@@ -73,10 +73,6 @@ module Tabular
       @columns.size
     end
 
-    def max
-      cells.compact.max
-    end
-
     def renderer(key)
       renderers[key] || @renderer || Renderer
     end
