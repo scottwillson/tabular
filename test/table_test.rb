@@ -95,5 +95,16 @@ module Tabular
       assert_equal({ :place => "1", :name => "Bernard Hinault" }, table.rows[0].to_hash)
     end
     
+    class StatelessTestMapper
+      def self.map(array)
+        Hash[*array]
+      end
+    end
+    
+    class TestMapper
+      def map(array)
+        Hash[*array]
+      end
+    end
   end
 end
