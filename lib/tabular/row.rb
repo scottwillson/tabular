@@ -56,6 +56,7 @@ module Tabular
       hash.each(&block)
     end
     
+    # Keys for all columns
     def keys
       hash.keys
     end
@@ -70,16 +71,19 @@ module Tabular
       hash.delete key
     end
 
+    # Previous Row
     def previous
       if index > 0
         @table.rows[index - 1]
       end
     end
 
+    # Tabluar::Columns
     def columns
       @table.columns
     end
 
+    # By default, return self[key]. Customize by setting Table#renderer or Column#renderers[key]
     def render(key)
       column = columns[key]
       column.renderer.render column, self

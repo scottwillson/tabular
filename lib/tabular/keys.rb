@@ -1,5 +1,6 @@
 module Tabular
   module Keys
+    # Return Symbol for +key+. Translate Column and String. Return +key+ unmodified for anything else.
     def key_to_sym(key)
       _key = case key
       when Column

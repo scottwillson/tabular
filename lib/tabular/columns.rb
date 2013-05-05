@@ -6,6 +6,7 @@ module Tabular
 
     attr_accessor :renderer
 
+    # +table+ -- Table
     # +data+ -- array of header names
     # +columns_map+ -- see Table. Maps column names and type conversion.
     def initialize(table, names, columns_map = {})
@@ -69,14 +70,17 @@ module Tabular
       end
     end
 
+    # Count of Columns#columns
     def size
       @columns.size
     end
 
+    # Renderer for Column +key+. Default to Table#renderer.
     def renderer(key)
       renderers[key] || @renderer || Renderer
     end
 
+    # List of Renderers
     def renderers
       @renderers ||= {}
     end

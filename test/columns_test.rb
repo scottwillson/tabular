@@ -33,7 +33,7 @@ module Tabular
     end
 
     def test_render
-      columns = Columns.new(nil, ["date", "first name", "LastName"])
+      columns = Columns.new(Table.new, ["date", "first name", "LastName"])
       assert_equal "date", columns.first.render
     end
 

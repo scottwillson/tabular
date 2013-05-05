@@ -1,5 +1,6 @@
 module Tabular
-  # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file.
+  # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file. Can also create a Table with Table.new. Either
+  # pass in data or set options and then call row=.
   class Table
     include Tabular::Keys
 
@@ -63,6 +64,8 @@ module Tabular
     #
     # Options:
     # :columns => { :original_name => :preferred_name, :column_name => { :column_type => :boolean } }
+    #
+    # The :columns option will likely be deprecated and options for mappers and renderers added
     def initialize(rows = [], *options)
       @options = Table.extract_options(options)
       self.rows = rows
@@ -72,6 +75,7 @@ module Tabular
       @rows ||= []
     end
     
+    # Set table rows. Calls row <<, which creates columns and links the source rows to Row#source.
     def rows=(source_rows = [])
       return [] unless source_rows
       
@@ -87,6 +91,9 @@ module Tabular
       rows[index]
     end
 
+    # Add row to end of table. Create missing columns and link the source row to Row#source.
+    # To control how source data is added to the Table, use Table#mapper= to set a class that 
+    # implements map(row) and returns a Hash.
     def <<(row)
       if row_mapper
         cells = row_mapper.map(row)
@@ -111,10 +118,12 @@ module Tabular
       rows.map { |row| row.join(",") }.join("\n")
     end
 
+    # Instance of Tabular::Columns
     def columns
       @columns ||= Tabular::Columns.new(self, [])
     end
 
+    # Remove all columns that only contain a blank string, zero, or nil
     def delete_blank_columns!
       columns.map(&:key).each do |key|
         if rows.all? { |row| row[key].blank? || row[key].zero? }
@@ -123,6 +132,7 @@ module Tabular
       end
     end
     
+    # Remove all columns that contain the same value in all rows
     def delete_homogenous_columns!
       return if rows.size < 2
       
@@ -134,6 +144,8 @@ module Tabular
       end
     end
     
+    # Remove preceding and trailing whitespace from all cells. By default, Table does not
+    # strip whitespace from cells.
     def strip!
       rows.each do |row|
         columns.each do |column|
@@ -152,10 +164,12 @@ module Tabular
       columns.delete key
     end
 
+    # Set default Renderer. If present, will be used for all cells and Column headers.
     def renderer=(value)
       columns.renderer = value
     end
 
+    # List of Renderers
     def renderers
       columns.renderers
     end
