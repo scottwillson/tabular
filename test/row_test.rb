@@ -18,28 +18,28 @@ module Tabular
     def test_new_from_hash
       row = Row.new(Table.new, { :place => "1" })
       assert_equal nil, row[:city], "[]"
-      
+
       assert_equal "1", row.join, "join"
       assert_equal({ :place => "1" }, row.to_hash, "to_hash")
       assert_equal "{:place=>\"1\"}", row.inspect, "inspect"
       assert_equal "1", row.to_s, "to_s"
-      
+
       # Test each
       row.each { |c| c.nil? }
     end
-    
+
     def test_new_from_hash_with_string_keys
       row = Row.new(Table.new, { "place" => "1" })
       assert_equal nil, row[:city], "[]"
-      
+
       assert_equal "1", row.join, "join"
       assert_equal({ :place => "1" }, row.to_hash, "to_hash")
       assert_equal "{:place=>\"1\"}", row.inspect, "inspect"
       assert_equal "1", row.to_s, "to_s"
-      
+
       # Test each
       row.each { |c| c.nil? }
-      
+
       assert_equal({ "place" => "1" }, row.source, "source")
     end
 
@@ -63,21 +63,6 @@ module Tabular
       assert_equal "Mars-Sun", row.join("-"), "join '-'"
     end
 
-    def test_render
-      table = Table.new([[ "planet", "star" ]])
-      table.renderers[:planet] = StarRenderer
-      row = Row.new(table, [ "Mars", "Sun" ])
-      assert_equal "****", row.render("planet"), "render"
-      assert_equal "****", row.render(:planet), "render"
-      assert_equal "****", row.render(row.columns.first), "render"
-    end
-
-    def test_render_with_no_renderer
-      table = Table.new([[ "planet", "star" ]])
-      row = Row.new(table, [ "Mars", "Sun" ])
-      assert_equal "Mars", row.render("planet"), "render"
-    end
-
     def test_to_hash
       table = Table.new([[ "planet", "star" ]])
       row = Row.new(table, [ "Mars", "Sun" ])
@@ -95,6 +80,21 @@ module Tabular
       table = Table.new([[ "planet", "star" ]])
       row = Row.new(table, [ "Mars", "Sun" ])
       assert_equal "Mars, Sun", row.to_s, "to_s"
+    end
+
+    def test_render
+      table = Table.new([[ "planet", "star" ]])
+      table.renderers[:planet] = StarRenderer
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "****", row.render("planet"), "render"
+      assert_equal "****", row.render(:planet), "render"
+      assert_equal "****", row.render(row.columns.first), "render"
+    end
+
+    def test_render_with_no_renderer
+      table = Table.new([[ "planet", "star" ]])
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "Mars", row.render("planet"), "render"
     end
 
     def test_previous
