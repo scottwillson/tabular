@@ -66,14 +66,6 @@ module Tabular
     def initialize(rows = [], *options)
       @options = Table.extract_options(options)
       self.rows = rows
-
-      rows.each do |row|
-        if @columns
-          self << row
-        else
-          @columns = Tabular::Columns.new(row, options[:columns])
-        end
-      end
     end
 
     def rows
