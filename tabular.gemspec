@@ -32,7 +32,18 @@ Gem::Specification.new do |s|
     "lib/tabular/support/object.rb",
     "lib/tabular/support/zero.rb",
     "lib/tabular/table.rb",
-    "tabular.gemspec"
+    "tabular.gemspec",
+    "test/column_test.rb",
+    "test/columns_test.rb",
+    "test/fixtures/blank.txt",
+    "test/fixtures/excel.xls",
+    "test/fixtures/quoted.txt",
+    "test/fixtures/sample.csv",
+    "test/fixtures/sample.lif",
+    "test/helper.rb",
+    "test/row_test.rb",
+    "test/table_test.rb",
+    "test/zero_test.rb"
   ]
   s.homepage = "http://github.com/scottwillson/tabular"
   s.require_paths = ["lib"]
