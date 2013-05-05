@@ -65,6 +65,12 @@ module Tabular
       @array.join(sep)
     end
 
+    def delete(key)
+      @array.delete key
+      hash.delete key
+    end
+    
+
     def previous
       if index > 0
         @table.rows[index - 1]
