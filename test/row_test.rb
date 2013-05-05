@@ -28,6 +28,21 @@ module Tabular
       assert_equal "Buzz", row[:astronaut], "row[:astronaut]"
     end
     
+    def test_render
+      table = Table.new([[ "planet", "star" ]])
+      table.renderers[:planet] = StarRenderer
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "****", row.render("planet"), "render"
+      assert_equal "****", row.render(:planet), "render"
+      assert_equal "****", row.render(row.columns.first), "render"
+    end
+    
+    def test_render_with_no_renderer
+      table = Table.new([[ "planet", "star" ]])
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "Mars", row.render("planet"), "render"
+    end
+    
     def test_join
       table = Table.new([[ "planet", "star" ]])
       row = Row.new(table, [ "Mars", "Sun" ])
@@ -75,6 +90,12 @@ module Tabular
       assert_equal Date.new(1999, 1, 1), Row.new(table, [ "1/1/99" ])[:launched], "1/1/99"
       assert_equal Date.new(2000, 8, 28), Row.new(table, [ "8/28/00" ])[:launched], "8/28/00"
       assert_equal Date.new(2008, 12, 31), Row.new(table, [ "12/31/08" ])[:launched], "12/31/08"
+    end
+
+    class StarRenderer
+      def self.render(column, row)
+        row[column.key].gsub(/\w/, "*")
+      end
     end
   end
 end

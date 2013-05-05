@@ -39,6 +39,17 @@ module Tabular
       assert_equal [ :date, :first_name, :last_name ], columns_from_each, "column keys from #each"
     end
     
+    def test_render
+      columns = Columns.new(nil, ["date", "first name", "LastName"])
+      assert_equal "date", columns.first.render
+    end
+    
+    def test_renderer
+      columns = Columns.new(nil, ["date", "first name", "LastName"])
+      columns.renderer = TestRenderer
+      assert_equal "Date", columns.first.render
+    end
+    
     def test_push_onto_blank
       columns = Columns.new([])
       columns << "city state"
@@ -59,6 +70,13 @@ module Tabular
 
       column = columns[:third]
       assert_equal :third, column.key, "column[:third] Column key"
+    end
+
+    class TestRenderer
+      def self.render_header(column)
+        key = column.key.to_s
+        (key.slice(0) || key.chars('')).upcase + (key.slice(1..-1) || key.chars('')).downcase
+      end
     end
   end
 end

@@ -2,7 +2,9 @@ module Tabular
   # The Table's header: a list of Columns.
   class Columns
     include Enumerable
-    
+
+    attr_accessor :renderer
+
     # +data+ -- array of header names
     # +columns_map+ -- see Table. Maps column names and type conversion.
     def initialize(data, columns_map = {})
@@ -54,6 +56,14 @@ module Tabular
       end
       @columns << column
     end
+
+    def renderer(key)
+      renderers[key] || @renderer || Renderer
+    end
+    
+    def renderers
+      @renderers ||= {}
+   end
     
     
     private 

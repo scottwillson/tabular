@@ -96,6 +96,14 @@ module Tabular
       @columns || Tabular::Columns.new([])
     end
     
+    def renderer=(value)
+      columns.renderer = value
+    end
+    
+    def renderers
+      columns.renderers
+    end
+
     def to_s
       "#<#{self.class} #{rows.size}>"
     end

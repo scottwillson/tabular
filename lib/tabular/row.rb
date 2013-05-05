@@ -48,6 +48,11 @@ module Tabular
       end
     end
     
+    def render(key)
+      column = columns[key]
+      column.renderer.render column, self
+    end
+    
     def columns
       @table.columns
     end

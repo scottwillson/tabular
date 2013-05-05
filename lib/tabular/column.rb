@@ -38,6 +38,14 @@ module Tabular
         nil
       end
     end
+
+    def render
+      renderer.render_header self
+    end
+    
+    def renderer
+      @columns.renderer(key)
+    end
     
     def inspect
       "#<Tabular::Column #{key} #{column_type}>"
