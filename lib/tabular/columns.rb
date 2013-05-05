@@ -15,8 +15,8 @@ module Tabular
       @columns_by_key = {}
       index = 0
       @columns = nil
-      @columns = data.map do |column|
-        new_column = Tabular::Column.new(column, @columns_map)
+      @columns = names.map do |column|
+        new_column = Tabular::Column.new(table, self, column, @columns_map)
         unless new_column.key.blank?
           @column_indexes[new_column.key] = index
           @columns_by_key[new_column.key] = new_column
@@ -49,8 +49,8 @@ module Tabular
 
     # Add a new Column with +key+
     def <<(key)
-      column = Column.new(key, @columns_map)
-      unless column.key.blank?
+      column = Column.new(@table, self, key, @columns_map)
+      unless column.key.blank? || has_key?(key)
         @column_indexes[column.key] = @columns.size
         @column_indexes[@columns.size] = column
         @columns_by_key[column.key] = column

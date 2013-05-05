@@ -3,7 +3,7 @@ module Tabular
   class Table
     include Tabular::Keys
 
-    attr_reader :rows
+    attr_reader :options, :rows
     attr_accessor :row_mapper
 
     # +file+ : file path as String or File
@@ -64,15 +64,14 @@ module Tabular
     # Options:
     # :columns => { :original_name => :preferred_name, :column_name => { :column_type => :boolean } }
     def initialize(rows = [], *options)
-      options = Table.extract_options(options)
-      @rows = []
+      @options = Table.extract_options(options)
+      self.rows = rows
 
-      rows.each do |row|
-        if @columns
-          self << row
-        else
-          @columns = Tabular::Columns.new(row, options[:columns])
-        end
+     rows.each do |row|
+       if @columns
+         self << row
+       else
+         @columns = Tabular::Columns.new(row, options[:columns])
       end
     end
 
@@ -95,7 +94,7 @@ module Tabular
     end
 
     def columns
-      @columns || Tabular::Columns.new([])
+      @columns ||= Tabular::Columns.new(self, [])
     end
 
     def renderer=(value)
