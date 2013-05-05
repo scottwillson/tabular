@@ -28,6 +28,14 @@ module Tabular
       end
     end
 
+    def rows
+      @table.rows
+    end
+    
+    def cells
+      rows.map { |r| r[key] }
+    end
+
     def symbolize(key)
       return nil if key.blank?
       

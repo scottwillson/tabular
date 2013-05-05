@@ -35,5 +35,15 @@ module Tabular
       assert_equal :phone, column.key, "key"
       assert_equal :integer, column.column_type, "column_type"
     end
+
+    def test_cells
+      data = [
+        { :place => "1", :name => "Bernard Hinault" },
+        { :place => "2", :name => "Greg Lemond" }
+      ]
+      table = Table.new(data)
+      column = table.columns[:place]
+      assert_equal [ "1", "2" ], column.cells
+    end
   end
 end
