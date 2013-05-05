@@ -7,7 +7,7 @@ module Tabular
       assert_equal nil, column.to_s, "blank column to_s"
       assert_equal nil, column.key, "blank column key"
     end
-    
+
     def test_new
       assert_equal :date, Column.new("date").key, "column key"
       assert_equal :date, Column.new(:date).key, "column key"
@@ -17,16 +17,16 @@ module Tabular
       assert_equal :start_date, Column.new("StartDate").key, "column key"
       assert_equal :start_date, Column.new("Start Date").key, "column key"
     end
-    
+
     def test_mapping
       assert_equal :city, Column.new(:location, :location => :city).key, "column key"
     end
-    
+
     def test_type
       column = Column.new("name")
       assert_equal :name, column.key, "key"
       assert_equal :string, column.column_type, "column_type"
-      
+
       column = Column.new("date")
       assert_equal :date, column.key, "key"
       assert_equal :date, column.column_type, "column_type"
@@ -52,23 +52,23 @@ module Tabular
         { :place => "2", :name => "Greg Lemond" }
       ]
       table = Table.new(data)
-      
+
       assert_equal "2", table.columns[:place].max
       assert_equal "Greg Lemond", table.columns[:name].max
     end
-    
+
     def test_precision
       data = [
         { :place => "1", :age => 22, :points => 10.75 },
         { :place => "2", :age => 30, :points => 12.000 }
       ]
       table = Table.new(data)
-      
+
       assert_equal 0, table.columns[:place].precision
       assert_equal 0, table.columns[:age].precision
       assert_equal 2, table.columns[:points].precision
     end
-    
+
     def test_precision_with_mixed_zeros
       data = [
         { :place => "1", :age => 22, :points => 12.001 }

@@ -5,9 +5,9 @@ module Tabular
   class Row
     include Enumerable
     include Tabular::Keys
-    
+
     attr_reader :index
-    
+
     # +table+ -- Table
     # +cells+ -- array (not neccessarily Strings)
     # +source+ -- original data before mapped to Hash or Array (optional)
@@ -17,12 +17,12 @@ module Tabular
       @hash = nil
       @index = table.rows.size
     end
-    
+
     # Cell value by symbol. E.g., row[:phone_number]
     def [](key)
       hash[key]
     end
-    
+
     # Set cell value. Adds cell to end of Row and adds new Column if there is no Column for +key_
     def []=(key, value)
       if columns.has_key?(key)
@@ -33,7 +33,7 @@ module Tabular
       end
       hash[key] = value
     end
-    
+
     # Call +block+ for each cell
     def each(&block)
       @array.each(&block)
@@ -43,37 +43,37 @@ module Tabular
     def join(sep = nil)
       @array.join(sep)
     end
-    
+
     def previous
       if index > 0
         @table.rows[index - 1]
       end
     end
-    
+
     def render(key)
       column = columns[key]
       column.renderer.render column, self
     end
-    
+
     def columns
       @table.columns
     end
-    
+
     def to_hash
       hash.dup
     end
-    
+
     def inspect
       hash.inspect
     end
-    
+
     def to_s
       @array.join(", ").to_s
     end
 
 
     protected
-    
+
     def hash #:nodoc:
       unless @hash
         @hash = Hash.new
@@ -110,14 +110,14 @@ module Tabular
       end
       @hash
     end
-    
-    
+
+
     private
-    
+
     # Handle common m/d/yy case that Date.parse dislikes
     def parse_invalid_date(value)
       return unless value
-      
+
       parts = value.split("/")
       return unless parts.size == 3
 
@@ -135,7 +135,7 @@ module Tabular
       elsif year < 1900 || year > 2050
         return nil
       end
-      
+
       Date.new(year, month, day)
     end
   end

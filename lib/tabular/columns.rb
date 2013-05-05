@@ -25,28 +25,28 @@ module Tabular
         new_column
       end
     end
-    
+
     # Is the a Column with this key? Keys are lower-case, underscore symbols.
     # Example: :postal_code
     def has_key?(key)
       @columns.any? { |column| column.key == key }
     end
-    
+
     # Column for +key+
     def [](key)
       @columns_by_key[key_to_sym(key)]
     end
-    
+
     # Zero-based index of Column for +key+
     def index(key)
       @column_indexes[key]
     end
-    
+
     # Call +block+ for each Column
     def each(&block)
       @columns.each(&block)
     end
-    
+
     # Add a new Column with +key+
     def <<(key)
       column = Column.new(key, @columns_map)
@@ -61,14 +61,14 @@ module Tabular
     def renderer(key)
       renderers[key] || @renderer || Renderer
     end
-    
+
     def renderers
       @renderers ||= {}
    end
-    
-    
-    private 
-    
+
+
+    private
+
     def normalize_columns_map(columns_map)
       normalized_columns_map = {}
       columns_map.each do |key, value|

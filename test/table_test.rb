@@ -5,11 +5,11 @@ module Tabular
     def test_read_from_blank_txt_file
       Table.read(File.expand_path(File.dirname(__FILE__) + "/fixtures/blank.txt"))
     end
-    
+
     def test_read_quoted_txt_file
       Table.read(File.expand_path(File.dirname(__FILE__) + "/fixtures/quoted.txt"))
     end
-    
+
     # "Place ","Number","Last Name","First Name","Team","Category Raced"
     # "1","189","Willson","Scott","Gentle Lover","Senior Men 1/2/3","11",,"11"
     # "2","190","Phinney","Harry","CCCP","Senior Men 1/2/3","9",,
@@ -31,22 +31,22 @@ module Tabular
       assert_equal "Paul", table[3][:first_name], "3.3"
       assert_equal "Hutch's", table[3][:team], "3.4"
     end
-    
+
     def test_read_from_excel
       table = Table.read(File.expand_path(File.dirname(__FILE__) + "/fixtures/excel.xls"))
       assert_equal Date.new(2006, 1, 20), table[0][:date], "0.0"
     end
-    
+
     def test_read_from_excel_file
       table = Table.read(File.new(File.expand_path(File.dirname(__FILE__) + "/fixtures/excel.xls")))
       assert_equal Date.new(2006, 1, 20), table[0][:date], "0.0"
     end
-    
+
     def test_read_as
       table = Table.read(File.expand_path(File.dirname(__FILE__) + "/fixtures/sample.lif"), :as => :csv)
       assert_equal 4, table.rows.size, "rows"
     end
-    
+
     def test_column_map
       data = [
         [ "nom", "equipe", "homme" ],
@@ -77,11 +77,11 @@ module Tabular
       table = Table.new
       table.row_mapper = StatelessTestMapper
       table.rows = data
-      
+
       assert_equal 1, table.rows.size, "size"
       assert_equal({ :place => "1", :name => "Bernard Hinault" }, table.rows[0].to_hash)
     end
-    
+
     def test_row_mapper
       data = [
         [ :place, "1", :name, "Bernard Hinault" ],
@@ -90,17 +90,17 @@ module Tabular
       table = Table.new
       table.row_mapper = TestMapper.new
       table.rows = data
-      
+
       assert_equal 1, table.rows.size, "size"
       assert_equal({ :place => "1", :name => "Bernard Hinault" }, table.rows[0].to_hash)
     end
-    
+
     class StatelessTestMapper
       def self.map(array)
         Hash[*array]
       end
     end
-    
+
     class TestMapper
       def map(array)
         Hash[*array]

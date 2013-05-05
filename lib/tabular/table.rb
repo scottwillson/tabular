@@ -5,7 +5,7 @@ module Tabular
 
     attr_reader :rows
     attr_accessor :row_mapper
-    
+
     # +file+ : file path as String or File
     # Assumes .txt = tab-delimited, .csv = CSV, .xls = Excel. Assumes first row is the header.
     # Normalizes column names to lower-case with underscores.
@@ -16,16 +16,16 @@ module Tabular
       else
         file
       end
-      
+
       raise "Could not find '#{file_path}'" unless File.exists?(file_path)
       options = extract_options(options)
-      
+
       format = self.format_from(options.delete(:as), file_path)
       data = read_file(file_path, format)
-      
+
       Table.new data, options
     end
-    
+
     # +format+ : :csv, :txt, or :xls
     # Returns Array of Arrays
     def self.read_file(file_path, format)
@@ -57,8 +57,8 @@ module Tabular
         raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
       end
     end
-    
-    # Pass data in as +rows+. Expects rows to be an Enumerable of Enumerables. 
+
+    # Pass data in as +rows+. Expects rows to be an Enumerable of Enumerables.
     # Maps rows to Hash-like Tabular::Rows.
     #
     # Options:
@@ -66,7 +66,7 @@ module Tabular
     def initialize(rows = [], *options)
       options = Table.extract_options(options)
       @rows = []
-      
+
       rows.each do |row|
         if @columns
           self << row
@@ -75,12 +75,12 @@ module Tabular
         end
       end
     end
-    
+
     # Return Row at zero-based index, or nil if Row is out of bounds
     def [](index)
       rows[index]
     end
-    
+
     def <<(row)
       if row_mapper
         cells = row_mapper.map(row)
@@ -89,19 +89,19 @@ module Tabular
       end
       @rows << Tabular::Row.new(self, row)
     end
-    
+
     def inspect
       rows.map { |row| row.join(",") }.join("\n")
     end
-    
+
     def columns
       @columns || Tabular::Columns.new([])
     end
-    
+
     def renderer=(value)
       columns.renderer = value
     end
-    
+
     def renderers
       columns.renderers
     end
@@ -112,7 +112,7 @@ module Tabular
 
 
     private
-    
+
     def self.extract_options(options)
       if options
         options.flatten.first || {}
@@ -120,7 +120,7 @@ module Tabular
         {}
       end
     end
-    
+
     def self.format_from(as_option, file_path)
       if as_option.present?
         as_option
