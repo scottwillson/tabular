@@ -8,3 +8,4 @@ require "tabular/row.rb"
 require "tabular/table.rb"
 
 require "tabular/support/object"
+require "tabular/support/zero"
