@@ -15,6 +15,34 @@ module Tabular
       row.each { |c| c.nil? }
     end
 
+    def test_new_from_hash
+      row = Row.new(Table.new, { :place => "1" })
+      assert_equal nil, row[:city], "[]"
+      
+      assert_equal "1", row.join, "join"
+      assert_equal({ :place => "1" }, row.to_hash, "to_hash")
+      assert_equal "{:place=>\"1\"}", row.inspect, "inspect"
+      assert_equal "1", row.to_s, "to_s"
+      
+      # Test each
+      row.each { |c| c.nil? }
+    end
+    
+    def test_new_from_hash_with_string_keys
+      row = Row.new(Table.new, { "place" => "1" })
+      assert_equal nil, row[:city], "[]"
+      
+      assert_equal "1", row.join, "join"
+      assert_equal({ :place => "1" }, row.to_hash, "to_hash")
+      assert_equal "{:place=>\"1\"}", row.inspect, "inspect"
+      assert_equal "1", row.to_s, "to_s"
+      
+      # Test each
+      row.each { |c| c.nil? }
+      
+      assert_equal({ "place" => "1" }, row.source, "source")
+    end
+
     def test_set
       table = Table.new([[ "planet", "star" ]])
       row = Row.new(table, [ "Mars", "Sun" ])
@@ -26,6 +54,13 @@ module Tabular
 
       row[:astronaut] = "Buzz"
       assert_equal "Buzz", row[:astronaut], "row[:astronaut]"
+    end
+
+    def test_join
+      table = Table.new([[ "planet", "star" ]])
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "MarsSun", row.join, "join"
+      assert_equal "Mars-Sun", row.join("-"), "join '-'"
     end
 
     def test_render
@@ -41,13 +76,6 @@ module Tabular
       table = Table.new([[ "planet", "star" ]])
       row = Row.new(table, [ "Mars", "Sun" ])
       assert_equal "Mars", row.render("planet"), "render"
-    end
-
-    def test_join
-      table = Table.new([[ "planet", "star" ]])
-      row = Row.new(table, [ "Mars", "Sun" ])
-      assert_equal "MarsSun", row.join, "join"
-      assert_equal "Mars-Sun", row.join("-"), "join '-'"
     end
 
     def test_to_hash
@@ -75,6 +103,16 @@ module Tabular
       table << [ "Jupiter", "Sun" ]
       assert_equal nil, table.rows.first.previous, "previous of first Row"
       assert_equal "Mars", table.rows.last.previous[:planet], "previous"
+    end
+
+    def test_each_with_key
+      table = Table.new([[ "planet", "star" ]])
+      table << [ "Mars", "Sun" ]
+      results = []
+      table.rows.first.each_with_key do |key, value|
+        results << [ key, value ]
+      end
+      assert_equal [ [ :planet, "Mars" ], [ :star, "Sun" ] ], results
     end
 
     def test_invalid_date_raises_exception

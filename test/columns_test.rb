@@ -3,7 +3,7 @@ require "helper"
 module Tabular
   class ColumnsTest < Test::Unit::TestCase
     def test_new_blank
-      columns = Columns.new([])
+      columns = Columns.new(nil, [])
       assert_equal false, columns.has_key?(:name), "has_key? :name"
       assert_equal nil, columns[:name], "[:name]"
       assert_equal nil, columns.index(nil), "index"
@@ -27,16 +27,9 @@ module Tabular
     end
 
     def test_columns_map
-      columns = Columns.new(["date"], :start_date => :date)
+      columns = Columns.new(nil, ["date"], :start_date => :date)
       assert_equal true, columns.has_key?(:date), "has_key? :date"
       assert_equal false, columns.has_key?(:start_date), "has_key? :start_date"
-    end
-
-    def test_each
-      columns = Columns.new(["date", "first name", "LastName"])
-      columns_from_each = []
-      columns.each { |c| columns_from_each << c.key }
-      assert_equal [ :date, :first_name, :last_name ], columns_from_each, "column keys from #each"
     end
 
     def test_render
@@ -65,7 +58,7 @@ module Tabular
     end
 
     def test_push_onto_blank
-      columns = Columns.new([])
+      columns = Columns.new(nil, [])
       columns << "city state"
       assert_equal true, columns.has_key?(:city_state), "has_key? :city_state"
       assert_equal 0, columns.index(:city_state), "index of new column"
