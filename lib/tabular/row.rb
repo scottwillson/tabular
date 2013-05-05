@@ -69,7 +69,6 @@ module Tabular
       @array.delete key
       hash.delete key
     end
-    
 
     def previous
       if index > 0
@@ -77,13 +76,13 @@ module Tabular
       end
     end
 
+    def columns
+      @table.columns
+    end
+
     def render(key)
       column = columns[key]
       column.renderer.render column, self
-    end
-
-    def columns
-      @table.columns
     end
 
     def to_hash
