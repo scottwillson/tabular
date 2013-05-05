@@ -55,8 +55,8 @@ module Tabular
         @column_indexes[column.key] = @columns.size
         @column_indexes[@columns.size] = column
         @columns_by_key[column.key] = column
+        @columns << column
       end
-      @columns << column
     end
 
     def delete(key)
