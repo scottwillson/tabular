@@ -115,6 +115,43 @@ module Tabular
       @columns ||= Tabular::Columns.new(self, [])
     end
 
+    def delete_blank_columns!
+      columns.map(&:key).each do |key|
+        if rows.all? { |row| row[key].blank? || row[key].zero? }
+          delete_column key
+        end
+      end
+    end
+    
+    def delete_homogenous_columns!
+      return if rows.size < 2
+      
+      columns.map(&:key).each do |key|
+        value = rows.first[key]
+        if rows.all? { |row| row[key] == value }
+          delete_column key
+        end
+      end
+    end
+    
+    def strip!
+      rows.each do |row|
+        columns.each do |column|
+          value = row[column.key]
+          if value.respond_to?(:strip)
+            row[column.key] = value.strip
+          end
+        end
+      end
+    end
+    
+    def delete_column(key)
+      rows.each do |row|
+        row.delete key
+      end
+      columns.delete key
+    end
+
     def renderer=(value)
       columns.renderer = value
     end
