@@ -45,5 +45,16 @@ module Tabular
       column = table.columns[:place]
       assert_equal [ "1", "2" ], column.cells
     end
+
+    def test_max
+      data = [
+        { :place => "1", :name => "Bernard Hinault" },
+        { :place => "2", :name => "Greg Lemond" }
+      ]
+      table = Table.new(data)
+      
+      assert_equal "2", table.columns[:place].max
+      assert_equal "Greg Lemond", table.columns[:name].max
+    end
   end
 end

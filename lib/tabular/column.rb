@@ -52,6 +52,10 @@ module Tabular
       rows.map { |r| r[key] }
     end
 
+    def max
+      cells.compact.max
+    end
+
     def render
       renderer.render_header self
     end
