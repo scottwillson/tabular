@@ -2,6 +2,7 @@ module Tabular
   # The Table's header: a list of Columns.
   class Columns
     include Enumerable
+    include Tabular::Keys
 
     attr_accessor :renderer
 
