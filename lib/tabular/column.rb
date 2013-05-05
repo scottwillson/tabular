@@ -1,5 +1,7 @@
 module Tabular
   class Column
+    include Tabular::Keys
+
     attr_reader :key, :column_type
     
     def initialize(key = nil, columns_map = {})

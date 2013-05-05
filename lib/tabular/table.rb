@@ -1,6 +1,8 @@
 module Tabular
   # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file.
   class Table
+    include Tabular::Keys
+
     attr_reader :rows
     attr_accessor :row_mapper
     

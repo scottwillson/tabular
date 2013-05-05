@@ -4,6 +4,7 @@ module Tabular
   # Associate list of cells. Each Table has a list of Rows. Access Row cells via symbols. Ex: row[:city]
   class Row
     include Enumerable
+    include Tabular::Keys
     
     attr_reader :index
     

@@ -33,7 +33,7 @@ module Tabular
     
     # Column for +key+
     def [](key)
-      @columns_by_key[key]
+      @columns_by_key[key_to_sym(key)]
     end
     
     # Zero-based index of Column for +key+
@@ -73,9 +73,9 @@ module Tabular
       columns_map.each do |key, value|
         case value
         when Hash, Symbol
-          normalized_columns_map[key.to_sym] = value
+          normalized_columns_map[key_to_sym(key)] = value
         else
-          normalized_columns_map[key.to_sym] = value.to_sym
+          normalized_columns_map[key_to_sym(key)] = value.to_sym
         end
       end
       normalized_columns_map
