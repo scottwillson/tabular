@@ -7,7 +7,8 @@ module Tabular
 
     # +data+ -- array of header names
     # +columns_map+ -- see Table. Maps column names and type conversion.
-    def initialize(data, columns_map = {})
+    def initialize(table, names, columns_map = {})
+      @table = table
       columns_map ||= {}
       @columns_map = normalize_columns_map(columns_map)
       @column_indexes = {}

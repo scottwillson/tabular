@@ -58,6 +58,17 @@ module Tabular
       assert_equal true, table.rows.first[:homme], "boolean"
     end
 
+    def test_new_with_hashes
+      data = [
+        { :place => "1", :name => "Bernard Hinault" },
+        { :place => "2", :name => "Greg Lemond" }
+      ]
+      table = Table.new(data)
+      assert_equal 2, table.rows.size, "size"
+      assert_equal data[0], table.rows[0].to_hash
+      assert_equal data[1], table.rows[1].to_hash
+    end
+
     def test_row_mapper_class_method
       data = [
         [ :place, "1", :name, "Bernard Hinault" ],

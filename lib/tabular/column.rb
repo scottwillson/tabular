@@ -4,7 +4,10 @@ module Tabular
 
     attr_reader :key, :column_type
     
-    def initialize(key = nil, columns_map = {})
+    def initialize(table, columns, key = nil, columns_map = {})
+      @columns = columns
+      @table = table
+
       key = symbolize(key)
       columns_map = columns_map || {}
       map_for_key = columns_map[key]

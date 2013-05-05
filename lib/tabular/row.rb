@@ -9,8 +9,9 @@ module Tabular
     attr_reader :index
     
     # +table+ -- Table
-    # +cell+ -- array (not neccessarily Strings)
-    def initialize(table, cells = [])
+    # +cells+ -- array (not neccessarily Strings)
+    # +source+ -- original data before mapped to Hash or Array (optional)
+    def initialize(table, cells = [], source = nil)
       @table = table
       @array = cells
       @hash = nil
