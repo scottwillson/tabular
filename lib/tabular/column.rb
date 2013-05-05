@@ -73,7 +73,7 @@ module Tabular
     end
 
     def to_s
-      key
+      key.to_s
     end
   end
 end
