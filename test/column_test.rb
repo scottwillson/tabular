@@ -56,5 +56,25 @@ module Tabular
       assert_equal "2", table.columns[:place].max
       assert_equal "Greg Lemond", table.columns[:name].max
     end
+    
+    def test_precision
+      data = [
+        { :place => "1", :age => 22, :points => 10.75 },
+        { :place => "2", :age => 30, :points => 12.000 }
+      ]
+      table = Table.new(data)
+      
+      assert_equal 0, table.columns[:place].precision
+      assert_equal 0, table.columns[:age].precision
+      assert_equal 2, table.columns[:points].precision
+    end
+    
+    def test_precision_with_mixed_zeros
+      data = [
+        { :place => "1", :age => 22, :points => 12.001 }
+      ]
+      table = Table.new(data)
+      assert_equal 3, table.columns[:points].precision
+    end
   end
 end

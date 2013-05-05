@@ -56,6 +56,10 @@ module Tabular
       cells.compact.max
     end
 
+    def precision
+      @precision || cells.map(&:to_f).map {|n| n.round(3) }.map {|n| n.to_s.split(".").last.gsub(/0+$/, "").length }.max
+    end
+
     def render
       renderer.render_header self
     end
