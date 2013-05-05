@@ -2,10 +2,10 @@ require "rubygems"
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")
 
-require "tabular/column.rb"
-require "tabular/columns.rb"
-require "tabular/row.rb"
-require "tabular/table.rb"
+require "tabular/column"
+require "tabular/columns"
+require "tabular/row"
+require "tabular/table"
 
 require "tabular/support/object"
 require "tabular/support/zero"
