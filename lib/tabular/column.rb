@@ -1,5 +1,7 @@
 module Tabular
   class Column
+    include Tabular::Blank
+
     attr_reader :key, :column_type
 
     # +table+ -- parent Table
@@ -69,7 +71,7 @@ module Tabular
     private
 
     def symbolize(key)
-      return nil if key.blank?
+      return nil if is_blank?(key)
 
       begin
         key.to_s.strip.gsub(/::/, '/').

@@ -2,6 +2,7 @@ module Tabular
   # The Table's header: a list of Columns.
   class Columns
     include Enumerable
+    include Tabular::Blank
     include Tabular::Keys
 
     attr_accessor :renderer
@@ -19,7 +20,7 @@ module Tabular
       @columns = nil
       @columns = names.map do |column|
         new_column = Tabular::Column.new(table, self, column, @columns_map)
-        unless new_column.key.blank?
+        unless is_blank?(new_column.key)
           @column_indexes[new_column.key] = index
           @columns_by_key[new_column.key] = new_column
         end
@@ -52,7 +53,7 @@ module Tabular
     # Add a new Column with +key+
     def <<(key)
       column = Column.new(@table, self, key, @columns_map)
-      unless column.key.blank? || has_key?(key)
+      unless is_blank?(column.key) || has_key?(key)
         @column_indexes[column.key] = @columns.size
         @column_indexes[@columns.size] = column
         @columns_by_key[column.key] = column

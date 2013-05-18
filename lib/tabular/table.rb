@@ -2,7 +2,9 @@ module Tabular
   # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file. Can also create a Table with Table.new. Either
   # pass in data or set options and then call row=.
   class Table
+    include Tabular::Blank
     include Tabular::Keys
+    include Tabular::Zero
 
     attr_reader :options, :rows
     attr_accessor :row_mapper
@@ -126,7 +128,7 @@ module Tabular
     # Remove all columns that only contain a blank string, zero, or nil
     def delete_blank_columns!
       columns.map(&:key).each do |key|
-        if rows.all? { |row| row[key].blank? || row[key].zero? }
+        if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) }
           delete_column key
         end
       end
@@ -190,7 +192,7 @@ module Tabular
     end
 
     def self.format_from(as_option, file_path)
-      if as_option.present?
+      if as_option
         as_option
       else
         case File.extname(file_path)
