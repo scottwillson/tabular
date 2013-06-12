@@ -135,10 +135,16 @@ module Tabular
     end
     
     # Remove all columns that contain the same value in all rows
-    def delete_homogenous_columns!
+    def delete_homogenous_columns!(*_options)
       return if rows.size < 2
       
-      columns.map(&:key).each do |key|
+      if _options.first && _options.first[:except]
+        exceptions = _options.first[:except]
+      else
+        exceptions = []
+      end
+      
+      (columns.map(&:key) - exceptions).each do |key|
         value = rows.first[key]
         if rows.all? { |row| row[key] == value }
           delete_column key

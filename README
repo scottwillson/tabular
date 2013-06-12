@@ -62,6 +62,7 @@ There's basic test coverage. More comprehensive test coverage needs to be extrac
 
 Changes
 -------
+0.2.3 Add :except option for delete_homogenous_columns!
 0.2.1 Documentation!
 0.2.0 Add several new features that break previous API
  * New public accessors for Table, Columns, Row, and Column

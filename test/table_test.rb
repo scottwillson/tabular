@@ -113,10 +113,10 @@ module Tabular
     def test_delete_blank_columns_empty_table
       Table.new.delete_blank_columns!
     end
-    
+
     def test_delete_homogenous_columns
       Table.new.delete_homogenous_columns!
-      
+
       data = [
         [ "nom", "equipe", "homme", "age" ],
         [ "Hinault", "", "true", "30" ],
@@ -126,18 +126,37 @@ module Tabular
 
       table = Table.new
       table.rows = data
-      
+
       table.delete_homogenous_columns!
-      
+
       assert_equal 3, table.rows.size, "size"
       assert_equal({ :nom => "Hinault", :age => "30" }, table.rows[0].to_hash)
       assert_equal({ :nom => "Lemond", :age => "20" }, table.rows[1].to_hash)
       assert_equal({ :nom => "Hinault", :age => "30" }, table.rows[2].to_hash)
     end
-    
+
+    def test_delete_homogenous_columns_with_exceptions
+      data = [
+        [ "nom", "equipe", "homme", "age" ],
+        [ "Hinault", "", "true", "30" ],
+        [ "Lemond", "", "true", "20" ],
+        [ "Hinault", "", "true", "30" ]
+      ]
+
+      table = Table.new
+      table.rows = data
+
+      table.delete_homogenous_columns!(:except => [ :homme ])
+
+      assert_equal 3, table.rows.size, "size"
+      assert_equal({ :nom => "Hinault", :homme => "true", :age => "30" }, table.rows[0].to_hash)
+      assert_equal({ :nom => "Lemond", :homme => "true", :age => "20" }, table.rows[1].to_hash)
+      assert_equal({ :nom => "Hinault", :homme => "true", :age => "30" }, table.rows[2].to_hash)
+    end
+
     def test_delete_homogenous_columns_single_row
       Table.new.delete_homogenous_columns!
-      
+
       data = [
         [ "nom", "equipe", "homme", "age" ],
         [ "Hinault", "", "true", "30" ],
