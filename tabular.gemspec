@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "tabular"
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Scott Willson"]
-  s.date = "2013-05-20"
+  s.date = "2013-06-12"
   s.description = "Tabular is a Ruby library for reading, writing, and manipulating CSV, tab-delimited and Excel data."
   s.email = "scott.willson@gmail.cpm"
   s.extra_rdoc_files = [
