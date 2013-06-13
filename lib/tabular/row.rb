@@ -88,6 +88,10 @@ module Tabular
       column = columns[key]
       column.renderer.render column, self
     end
+    
+    def metadata
+      @table.metadata
+    end
 
     def to_hash
       hash.dup

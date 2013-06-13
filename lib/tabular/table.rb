@@ -181,6 +181,11 @@ module Tabular
     def renderers
       columns.renderers
     end
+    
+    # Last-resort storage for client code data
+    def metadata
+      @metadata ||= {}
+    end
 
     def to_s
       "#<#{self.class} #{rows.size}>"
