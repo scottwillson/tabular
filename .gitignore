@@ -1,5 +1,6 @@
 pkg
 rdoc
+.bundle
 .ruby-gemset
 .ruby-version
 .tm_properties
