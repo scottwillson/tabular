@@ -1,8 +1,25 @@
+GIT
+  remote: git://github.com/scottwillson/ruby-ole.git
+  revision: 6b9d2530b12259ca21af75ed2dcb26ba745a6115
+  specs:
+    ruby-ole (1.2.11.3)
+
+GIT
+  remote: git://github.com/scottwillson/spreadsheet.git
+  revision: e5d97bc43f3db66600a70ace5de638f41a4a700b
+  specs:
+    spreadsheet (0.6.6)
+      ruby-ole
+
 GEM
   remote: https://rubygems.org/
   specs:
+    rake (10.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  rake
+  ruby-ole!
+  spreadsheet!
