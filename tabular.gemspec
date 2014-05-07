@@ -1,6 +1,6 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-require "version"
+require "tabular/version"
 
 Gem::Specification.new do |s|
   s.name = "tabular"
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.summary = "Read, write, and manipulate CSV, tab-delimited and Excel data"
 
-  s.add_development_dependency "ruby-ole"
-  s.add_development_dependency "spreadsheet"
+  s.add_development_dependency "ruby-ole", "~> 1.2.11.3"
+  s.add_development_dependency "spreadsheet", "~> 0.6.6"
 end
 
