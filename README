@@ -8,6 +8,8 @@ Much of the API is a copy of FasterCSV without the focus on CSV.
 
 Import and display can be configured with Mappers and Renderers. It's a OOP-heavy design that is fast and test-able.
 
+Tabular can read Excel files if you add the spreadsheet gem to your project.
+
 Install
 -------
 sudo gem install tabular
@@ -62,6 +64,7 @@ There's basic test coverage. More comprehensive test coverage needs to be extrac
 
 Changes
 -------
+0.2.5 Use modern gemspec with no runtime dependencies. Make spreadsheet gem optional.
 0.2.3 Add :except option for delete_homogenous_columns!
 0.2.1 Documentation!
 0.2.0 Add several new features that break previous API
@@ -73,14 +76,14 @@ Changes
    A | B | C
    =========
    1 | 2 | 3
-   1 | 6 | 
+   1 | 6 |
    1 | * | 5
-   
+
    Column A would be deleted
  * Table#strip! to remove whitespace around cell values. By default, Tabular::Table preserves cell whitespace.
  * Column#max
  * Column#precision
- * Ruby 1.8 support is deprcated
+ * Ruby 1.8 support is deprecated
 
 0.0.5 Parse 'invalid' m/d/yy dates
 
@@ -88,4 +91,4 @@ Changes
 Copyright
 ---------
 
-Copyright (c) 2010 Scott Willson. See LICENSE for details.
+Copyright (c) 2014 Scott Willson. See LICENSE for details.
