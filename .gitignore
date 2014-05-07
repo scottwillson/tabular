@@ -4,3 +4,4 @@ rdoc
 .ruby-gemset
 .ruby-version
 .tm_properties
+*.gem
