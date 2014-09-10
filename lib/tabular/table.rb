@@ -76,15 +76,15 @@ module Tabular
     def rows
       @rows ||= []
     end
-    
+
     # Set table rows. Calls row <<, which creates columns and links the source rows to Row#source.
     def rows=(source_rows = [])
       return [] unless source_rows
-      
+
       source_rows.each do |row|
         self.<< row
       end
-      
+
       rows
     end
 
@@ -94,7 +94,7 @@ module Tabular
     end
 
     # Add row to end of table. Create missing columns and link the source row to Row#source.
-    # To control how source data is added to the Table, use Table#mapper= to set a class that 
+    # To control how source data is added to the Table, use Table#mapper= to set a class that
     # implements map(row) and returns a Hash.
     def <<(row)
       if row_mapper
@@ -126,24 +126,30 @@ module Tabular
     end
 
     # Remove all columns that only contain a blank string, zero, or nil
-    def delete_blank_columns!
-      columns.map(&:key).each do |key|
-        if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) }
-          delete_column key
-        end
-      end
-    end
-    
-    # Remove all columns that contain the same value in all rows
-    def delete_homogenous_columns!(*_options)
-      return if rows.size < 2
-      
+    def delete_blank_columns!(*_options)
       if _options.first && _options.first[:except]
         exceptions = _options.first[:except]
       else
         exceptions = []
       end
-      
+
+      (columns.map(&:key) - exceptions).each do |key|
+        if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) }
+          delete_column key
+        end
+      end
+    end
+
+    # Remove all columns that contain the same value in all rows
+    def delete_homogenous_columns!(*_options)
+      return if rows.size < 2
+
+      if _options.first && _options.first[:except]
+        exceptions = _options.first[:except]
+      else
+        exceptions = []
+      end
+
       (columns.map(&:key) - exceptions).each do |key|
         value = rows.first[key]
         if rows.all? { |row| row[key] == value }
@@ -151,7 +157,7 @@ module Tabular
         end
       end
     end
-    
+
     # Remove preceding and trailing whitespace from all cells. By default, Table does not
     # strip whitespace from cells.
     def strip!
@@ -164,7 +170,7 @@ module Tabular
         end
       end
     end
-    
+
     def delete_column(key)
       rows.each do |row|
         row.delete key
@@ -181,7 +187,7 @@ module Tabular
     def renderers
       columns.renderers
     end
-    
+
     # Last-resort storage for client code data
     def metadata
       @metadata ||= {}

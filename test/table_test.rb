@@ -103,13 +103,28 @@ module Tabular
 
       table = Table.new
       table.rows = data
-      
+
       table.delete_blank_columns!
-      
+
       assert_equal 1, table.rows.size, "size"
       assert_equal({ :nom => "Hinault", :homme => "true" }, table.rows[0].to_hash)
     end
-    
+
+    def test_delete_blank_columns_exceptions
+      data = [
+        [ "nom", "equipe", "homme", "age" ],
+        [ "Hinault", "", "true", "0" ]
+      ]
+
+      table = Table.new
+      table.rows = data
+
+      table.delete_blank_columns! :except => [ :equipe ]
+
+      assert_equal 1, table.rows.size, "size"
+      assert_equal({ :nom => "Hinault", :equipe => "", :homme => "true" }, table.rows[0].to_hash)
+    end
+
     def test_delete_blank_columns_empty_table
       Table.new.delete_blank_columns!
     end
@@ -164,9 +179,9 @@ module Tabular
 
       table = Table.new
       table.rows = data
-      
+
       table.delete_homogenous_columns!
-      
+
       assert_equal 1, table.rows.size, "size"
       assert_equal({ :nom => "Hinault", :equipe => "", :homme => "true", :age => "30" }, table.rows[0].to_hash)
     end
@@ -177,20 +192,20 @@ module Tabular
         { :place => "2", :name => "Greg Lemond" }
       ]
       table = Table.new(data)
-      
+
       table.delete_column :place
 
       assert_equal 2, table.rows.size, "size"
       assert_equal({ :name => "Bernard Hinault" }, table.rows[0].to_hash)
       assert_equal({ :name => "Greg Lemond" }, table.rows[1].to_hash)
     end
-    
+
     def test_strip
       data = [
         { :name => "  Bernard Hinault " }
       ]
       table = Table.new(data)
-      
+
       assert_equal 1, table.rows.size, "size"
       assert_equal({ :name => "  Bernard Hinault " }, table.rows[0].to_hash)
 
@@ -198,7 +213,7 @@ module Tabular
 
       assert_equal({ :name => "Bernard Hinault" }, table.rows[0].to_hash)
     end
-    
+
     class StatelessTestMapper
       def self.map(array)
         Hash[*array]
