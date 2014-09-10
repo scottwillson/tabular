@@ -127,11 +127,7 @@ module Tabular
 
     # Remove all columns that only contain a blank string, zero, or nil
     def delete_blank_columns!(*_options)
-      if _options.first && _options.first[:except]
-        exceptions = _options.first[:except]
-      else
-        exceptions = []
-      end
+      exceptions = extract_exceptions(_options)
 
       (columns.map(&:key) - exceptions).each do |key|
         if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) }
@@ -144,11 +140,7 @@ module Tabular
     def delete_homogenous_columns!(*_options)
       return if rows.size < 2
 
-      if _options.first && _options.first[:except]
-        exceptions = _options.first[:except]
-      else
-        exceptions = []
-      end
+      exceptions = extract_exceptions(_options)
 
       (columns.map(&:key) - exceptions).each do |key|
         value = rows.first[key]
@@ -220,6 +212,14 @@ module Tabular
         when ".csv"
           :csv
         end
+      end
+    end
+
+    def extract_exceptions(options)
+      if options.first && options.first[:except]
+        options.first[:except]
+      else
+        []
       end
     end
   end
