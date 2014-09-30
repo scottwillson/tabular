@@ -185,6 +185,10 @@ module Tabular
       @metadata ||= {}
     end
 
+    def to_space_delimited
+      ([ columns ] + rows).map(&:to_space_delimited).join("\n") << "\n"
+    end
+
     def to_s
       "#<#{self.class} #{rows.size}>"
     end

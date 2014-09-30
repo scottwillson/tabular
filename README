@@ -64,6 +64,7 @@ There's basic test coverage. More comprehensive test coverage needs to be extrac
 
 Changes
 -------
+0.2.7 Add Table#to_space_delimited for space-padded fixed layout
 0.2.6 Add :except option for delete_blank_columns!
 0.2.5 Use modern gemspec with no runtime dependencies. Make spreadsheet gem optional.
 0.2.3 Add :except option for delete_homogenous_columns!

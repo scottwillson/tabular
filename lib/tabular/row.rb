@@ -55,7 +55,7 @@ module Tabular
     def each_with_key(&block)
       hash.each(&block)
     end
-    
+
     # Keys for all columns
     def keys
       hash.keys
@@ -88,13 +88,23 @@ module Tabular
       column = columns[key]
       column.renderer.render column, self
     end
-    
+
     def metadata
       @table.metadata
     end
 
     def to_hash
       hash.dup
+    end
+
+    def to_space_delimited
+      _cells = []
+
+      hash.each do |key, value|
+        _cells << (render(key) || "").ljust(columns[key].width)
+      end
+
+      _cells.join "   "
     end
 
     def inspect
@@ -127,7 +137,7 @@ module Tabular
                   else
                     @hash[column.key] = nil
                   end
-                rescue ArgumentError => e
+                rescue ArgumentError
                   date = parse_invalid_date(@array[index])
                   if date
                     @hash[column.key] = date

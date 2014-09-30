@@ -86,6 +86,9 @@ module Tabular
       @renderers ||= {}
     end
 
+    def to_space_delimited
+      map(&:to_space_delimited).join "   "
+    end
 
     private
 

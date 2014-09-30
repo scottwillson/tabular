@@ -47,7 +47,12 @@ module Tabular
 
     # Number of zeros to the right of the decimal point. Useful for formtting time data.
     def precision
-      @precision || cells.map(&:to_f).map {|n| n.round(3) }.map {|n| n.to_s.split(".").last.gsub(/0+$/, "").length }.max
+      @precision ||= cells.map(&:to_f).map {|n| n.round(3) }.map {|n| n.to_s.split(".").last.gsub(/0+$/, "").length }.max
+    end
+
+    # Widest string in column
+    def width
+      @width ||= (cells.map(&:to_s) << to_s).map(&:size).max
     end
 
     # Human-friendly header string. Delegate to +renderer+'s render_header method.
@@ -60,6 +65,10 @@ module Tabular
       @columns.renderer(key)
     end
 
+    def to_space_delimited
+      to_s.ljust width
+    end
+
     def inspect
       "#<Tabular::Column #{key} #{column_type}>"
     end
@@ -67,7 +76,7 @@ module Tabular
     def to_s
       key.to_s
     end
-    
+
     private
 
     def symbolize(key)

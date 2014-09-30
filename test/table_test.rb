@@ -214,6 +214,23 @@ module Tabular
       assert_equal({ :name => "Bernard Hinault" }, table.rows[0].to_hash)
     end
 
+    def test_to_space_delimited
+      table = Table.new([
+        [ "nom", "equipe", "homme", "age" ],
+        [ "Hinault", "", "true", "30" ],
+        [ "Lemond", "", "true", "20" ],
+        [ "Hinault", "", "true", "30" ]
+      ])
+
+      expected = <<-END
+nom       equipe   homme   age
+Hinault            true    30 
+Lemond             true    20 
+Hinault            true    30 
+END
+      assert_equal expected, table.to_space_delimited
+    end
+
     class StatelessTestMapper
       def self.map(array)
         Hash[*array]

@@ -130,6 +130,15 @@ module Tabular
       assert_equal Date.new(2008, 12, 31), Row.new(table, [ "12/31/08" ])[:launched], "12/31/08"
     end
 
+    def test_to_space_delimited
+      table = Table.new([[ "planet", "star" ]])
+      row = Row.new(table, [])
+      assert_equal "             ", row.to_space_delimited
+
+      row = Row.new(table, [ "Mars", "Sun" ])
+      assert_equal "Mars     Sun ", row.to_space_delimited
+    end
+
     class StarRenderer
       def self.render(column, row)
         row[column.key].gsub(/\w/, "*")
@@ -137,4 +146,3 @@ module Tabular
     end
   end
 end
-

@@ -76,5 +76,21 @@ module Tabular
       table = Table.new(data)
       assert_equal 3, table.columns[:points].precision
     end
+
+    def test_width
+      data = [
+        { :place => "1", :name => "Bernard Hinault" },
+        { :place => "2", :name => "Greg Lemond" }
+      ]
+      table = Table.new(data)
+
+      assert_equal 5, table.columns[:place].width
+      assert_equal 15, table.columns[:name].width
+    end
+
+    def test_to_space_delimited
+      table = Table.new([[ "planet", "star" ]])
+      assert_equal "planet", table.columns[:planet].to_space_delimited
+    end
   end
 end
