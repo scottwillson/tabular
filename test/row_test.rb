@@ -139,6 +139,22 @@ module Tabular
       assert_equal "Mars     Sun ", row.to_space_delimited
     end
 
+    def test_last
+      table = Table.new([[ "planet", "star" ]])
+      table << [ "Mars", "Sun" ]
+
+      row = table.rows[0]
+      assert row.last?, "last? (and first)"
+
+      table << [ "Earth", "Sun" ]
+
+      row = table.rows[0]
+      assert !row.last?, "last?"
+
+      row = table.rows[1]
+      assert row.last?, "last?"
+    end
+
     class StarRenderer
       def self.render(column, row)
         row[column.key].gsub(/\w/, "*")

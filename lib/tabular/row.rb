@@ -78,6 +78,10 @@ module Tabular
       end
     end
 
+    def last?
+      index == @table.rows.size - 1
+    end
+
     # Tabluar::Columns
     def columns
       @table.columns
