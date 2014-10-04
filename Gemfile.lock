@@ -1,25 +1,27 @@
 GIT
-  remote: git://github.com/scottwillson/ruby-ole.git
-  revision: 6b9d2530b12259ca21af75ed2dcb26ba745a6115
+  remote: git://github.com/Empact/roo.git
+  revision: 4a1353de22e46880e656d9af062a1436eb5e1a9c
   specs:
-    ruby-ole (1.2.11.3)
-
-GIT
-  remote: git://github.com/scottwillson/spreadsheet.git
-  revision: e5d97bc43f3db66600a70ace5de638f41a4a700b
-  specs:
-    spreadsheet (0.6.6)
-      ruby-ole
+    roo (1.13.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    mini_portile (0.6.0)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     rake (10.1.0)
+    ruby-ole (1.2.11.7)
+    rubyzip (1.1.6)
+    spreadsheet (1.0.0)
+      ruby-ole (>= 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   rake
-  ruby-ole!
-  spreadsheet!
+  roo!
