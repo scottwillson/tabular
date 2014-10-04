@@ -4,72 +4,22 @@ module Tabular
   class Table
     include Tabular::Blank
     include Tabular::Keys
+    include Tabular::Tables::FileReading
     include Tabular::Zero
 
-    attr_reader :options, :rows
+    attr_accessor :column_mapper
     attr_accessor :row_mapper
+    attr_reader   :rows
 
-    # +file+ : file path as String or File
-    # Assumes .txt = tab-delimited, .csv = CSV, .xls = Excel. Assumes first row is the header.
-    # Normalizes column names to lower-case with underscores.
-    def self.read(file, *options)
-      file_path = case file
-      when File
-         file.path
-      else
-        file
-      end
-
-      raise "Could not find '#{file_path}'" unless File.exists?(file_path)
-      options = extract_options(options)
-
-      format = self.format_from(options.delete(:as), file_path)
-      data = read_file(file_path, format)
-
-      Table.new data, options
-    end
-
-    # +format+ : :csv, :txt, or :xls
-    # Returns Array of Arrays
-    def self.read_file(file_path, format)
-      case format
-      when :xls
-        require "spreadsheet"
-        # Row#to_a coerces Excel data to Strings, but we want Dates and Numbers
-        data = []
-        Spreadsheet.open(file_path).worksheets.first.each do |excel_row|
-          data << excel_row.inject([]) { |row, cell| row << cell; row }
-        end
-        data
-      when :txt
-        require "csv"
-        if RUBY_VERSION < "1.9"
-          ::CSV.open(file_path, "r", "\t").collect { |row| row }
-        else
-          CSV.read(file_path, :col_sep => "\t")
-        end
-      when :csv
-        if RUBY_VERSION < "1.9"
-          require "fastercsv"
-          FasterCSV.read(file_path)
-        else
-          require "csv"
-          CSV.read(file_path)
-        end
-      else
-        raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
-      end
+    def self.read(file, options = {})
+      table = Table.new
+      table.read file, options[:as]
+      table
     end
 
     # Pass data in as +rows+. Expects rows to be an Enumerable of Enumerables.
     # Maps rows to Hash-like Tabular::Rows.
-    #
-    # Options:
-    # :columns => { :original_name => :preferred_name, :column_name => { :column_type => :boolean } }
-    #
-    # The :columns option will likely be deprecated and options for mappers and renderers added
-    def initialize(rows = [], *options)
-      @options = Table.extract_options(options)
+    def initialize(rows = [])
       self.rows = rows
     end
 
@@ -103,9 +53,11 @@ module Tabular
         cells = row
       end
 
-      if @columns.nil? && !cells.respond_to?(:keys)
-        @columns = Tabular::Columns.new(self, cells, options[:columns])
-        return columns
+      if @columns.nil?
+        @columns = Tabular::Columns.new(self, cells, column_mapper)
+        if !cells.respond_to?(:keys)
+          return columns
+        end
       end
 
       _row = Tabular::Row.new(self, cells, row)
@@ -122,7 +74,7 @@ module Tabular
 
     # Instance of Tabular::Columns
     def columns
-      @columns ||= Tabular::Columns.new(self, [])
+      @columns ||= Tabular::Columns.new(self, [], column_mapper)
     end
 
     # Remove all columns that only contain a blank string, zero, or nil
@@ -180,6 +132,13 @@ module Tabular
       columns.renderers
     end
 
+    def column_mapper=(mapper)
+      if rows.nil? || rows.size == 0
+        @columns = nil
+      end
+      @column_mapper = mapper
+    end
+
     # Last-resort storage for client code data
     def metadata
       @metadata ||= {}
@@ -195,29 +154,6 @@ module Tabular
 
 
     private
-
-    def self.extract_options(options)
-      if options
-        options.flatten.first || {}
-      else
-        {}
-      end
-    end
-
-    def self.format_from(as_option, file_path)
-      if as_option
-        as_option
-      else
-        case File.extname(file_path)
-        when ".xls", ".xlsx"
-          :xls
-        when ".txt"
-          :txt
-        when ".csv"
-          :csv
-        end
-      end
-    end
 
     def extract_exceptions(options)
       if options.first && options.first[:except]

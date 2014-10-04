@@ -1,33 +1,21 @@
 module Tabular
   class Column
-    include Tabular::Blank
-
     attr_reader :key, :column_type
 
     # +table+ -- parent Table
     # +column+ -- parent Columns
-    # +key+ is normalized to a downcase, underscored symbol
-    def initialize(table, columns, key = nil, columns_map = {})
+    # +key+ should be a normalized, downcase, underscored symbol
+    def initialize(table, columns, key = nil)
       @columns = columns
       @table = table
+      @key = self.columns.column_mapper.map(key)
 
-      key = symbolize(key)
-      columns_map = columns_map || {}
-      map_for_key = columns_map[key]
-
-      @column_type = :string
-      case map_for_key
-      when nil
-        @key = key
-        @column_type = :date if key == :date
-      when Symbol
-        @key = map_for_key
-        @column_type = :date if key == :date
-      when Hash
-        @key = key
-        @column_type = map_for_key[:column_type]
+      if @key && @key.to_s["date"]
+        @column_type = :date
+      elsif @key && @key.to_s[/\?\z/]
+        @column_type = :boolean
       else
-        raise "Expected Symbol or Hash, but was #{map_for_key.class}"
+        @column_type = :string
       end
     end
 
@@ -77,22 +65,11 @@ module Tabular
       key.to_s
     end
 
-    private
 
-    def symbolize(key)
-      return nil if is_blank?(key)
+    protected
 
-      begin
-        key.to_s.strip.gsub(/::/, '/').
-          gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-          gsub(/([a-z\d])([A-Z])/,'\1_\2').
-          tr("-", "_").
-          gsub(/ +/, "_").
-          downcase.
-          to_sym
-      rescue
-        nil
-      end
+    def columns
+      @columns ||= Columns.new
     end
   end
 end

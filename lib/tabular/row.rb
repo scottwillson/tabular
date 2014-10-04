@@ -133,7 +133,7 @@ module Tabular
               else
                 begin
                   if @array[index]
-                    @hash[column.key] = Date.parse(@array[index], true)
+                    @hash[column.key] = Date.parse(@array[index].to_s, true)
                   else
                     @hash[column.key] = nil
                   end
@@ -162,7 +162,7 @@ module Tabular
     def parse_invalid_date(value)
       return unless value
 
-      parts = value.split("/")
+      parts = value.to_s.split("/")
       return unless parts.size == 3
 
       month = parts[0].to_i

@@ -37,8 +37,8 @@ module Tabular
       assert_equal Date.new(2006, 1, 20), table[0][:date], "0.0"
     end
 
-    def test_read_from_excel_file
-      table = Table.read(File.new(File.expand_path(File.dirname(__FILE__) + "/fixtures/excel.xls")))
+    def test_read_from_xlsx
+      table = Table.read(File.new(File.expand_path(File.dirname(__FILE__) + "/fixtures/excel.xlsx")))
       assert_equal Date.new(2006, 1, 20), table[0][:date], "0.0"
     end
 
@@ -47,16 +47,18 @@ module Tabular
       assert_equal 4, table.rows.size, "rows"
     end
 
-    def test_column_map
-      data = [
-        [ "nom", "equipe", "homme" ],
-        [ "Hinault", "Team Z", "true" ]
-      ]
-      table = Table.new(data, :columns => { :nom => :name, :equipe => :team, :homme => { :column_type => :boolean } })
-      assert_equal "Hinault", table.rows.first[:name], ":name"
-      assert_equal "Team Z", table.rows.first[:team], ":team"
-      assert_equal true, table.rows.first[:homme], "boolean"
-    end
+	    def test_column_map
+	      data = [
+		[ "nom", "equipe", "homme" ],
+		[ "Hinault", "Team Z", "true" ]
+	      ]
+	      table = Table.new
+	      table.column_mapper = TestColumnsMapper.new
+	      table.rows = data
+	      assert_equal "Hinault", table.rows.first[:name], ":name"
+	      assert_equal "Team Z", table.rows.first[:team], ":team"
+	      assert_equal true, table.rows.first[:homme?], "boolean"
+	    end
 
     def test_new_with_hashes
       data = [
@@ -231,6 +233,17 @@ END
       assert_equal expected, table.to_space_delimited
     end
 
+    def test_autodetect_booleans
+      data = [
+        { :name => "Bernard Hinault", :member? => "0", :tdf_winner? => true },
+        { :name => "Bob Roll", :member? => "1", :tdf_winner? => false },
+      ]
+      table = Table.new(data)
+      assert_equal :string, table.columns[:name].column_type
+      assert_equal :boolean, table.columns[:member?].column_type
+      assert_equal :boolean, table.columns[:tdf_winner?].column_type
+    end
+
     class StatelessTestMapper
       def self.map(array)
         Hash[*array]
@@ -240,6 +253,21 @@ END
     class TestMapper
       def map(array)
         Hash[*array]
+      end
+    end
+
+    class TestColumnsMapper < ColumnMapper
+      def map(key)
+        _key = case key
+        when "nom"
+          :name
+        when "equipe"
+          :team
+        when "homme"
+          :homme?
+        end
+
+        super _key
       end
     end
   end

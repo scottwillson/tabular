@@ -26,10 +26,9 @@ module Tabular
       assert_equal 1, columns.index(:first_name), "index of :first_name"
     end
 
-    def test_columns_map
-      columns = Columns.new(nil, ["date"], :start_date => :date)
-      assert_equal true, columns.has_key?(:date), "has_key? :date"
-      assert_equal false, columns.has_key?(:start_date), "has_key? :start_date"
+    def test_mapping
+      columns = Columns.new(nil, [], CityMapper.new)
+      assert_equal :city, Column.new(Table.new, columns, :location).key, "column key"
     end
 
     def test_render
@@ -46,7 +45,7 @@ module Tabular
     def test_delete
       columns = Columns.new(nil, ["date", "first name", "LastName"])
       columns.delete :date
-      
+
       columns_from_each = []
       columns.each { |c| columns_from_each << c.key }
       assert_equal [ :first_name, :last_name ], columns_from_each, "column keys from #each"
@@ -83,6 +82,15 @@ module Tabular
       def self.render_header(column)
         key = column.key.to_s
         (key.slice(0) || key.chars('')).upcase + (key.slice(1..-1) || key.chars('')).downcase
+      end
+    end
+
+    class CityMapper < Tabular::ColumnMapper
+      def map(key)
+        if key == :location
+          key = :city
+        end
+        super key
       end
     end
   end

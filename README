@@ -14,17 +14,15 @@ Install
 -------
 sudo gem install tabular
 
-(The gem is hosted on Gemcutter, not RubyForge)
+Or, Gemfile:
+gem "tabular"
 
 
 Dependencies
 ------------
 For tab-delimited data: Ruby standard lib
 
-For CSV: FasterCSV (http://fastercsv.rubyforge.org/)
-sudo gem install fastercsv
-
-For Excel: Spreadsheet gem (http://spreadsheet.rubyforge.org/)
+For Excel: Roo gem (https://github.com/Empact/roo)
 sudo gem install spreadsheet
 
 
@@ -64,6 +62,8 @@ There's basic test coverage. More comprehensive test coverage needs to be extrac
 
 Changes
 -------
+0.3.0 Revise Table creation methods to something sensible. Use Roo to read
+      spreadsheets. Support for xlsx.
 0.2.7 Add Table#to_space_delimited for space-padded fixed layout
 0.2.6 Add :except option for delete_blank_columns!
 0.2.5 Use modern gemspec with no runtime dependencies. Make spreadsheet gem optional.

@@ -18,10 +18,6 @@ module Tabular
       assert_equal :start_date, Column.new(nil, nil, "Start Date").key, "column key"
     end
 
-    def test_mapping
-      assert_equal :city, Column.new(nil, nil, :location, :location => :city).key, "column key"
-    end
-
     def test_type
       column = Column.new(nil, nil, "name")
       assert_equal :name, column.key, "key"
@@ -30,10 +26,6 @@ module Tabular
       column = Column.new(nil, nil, "date")
       assert_equal :date, column.key, "key"
       assert_equal :date, column.column_type, "column_type"
-
-      column = Column.new(nil, nil, "phone", :phone => { :column_type => :integer })
-      assert_equal :phone, column.key, "key"
-      assert_equal :integer, column.column_type, "column_type"
     end
 
     def test_cells
