@@ -1,6 +1,7 @@
 pkg
 rdoc
 .bundle
+.DS_Store
 .ruby-gemset
 .ruby-version
 .tm_properties
