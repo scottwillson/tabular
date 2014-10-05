@@ -97,12 +97,16 @@ module Tabular
       assert_equal "Mars", row.render("planet"), "render"
     end
 
-    def test_previous
+    def test_previous_next
       table = Table.new([[ "planet", "star" ]])
       table << [ "Mars", "Sun" ]
       table << [ "Jupiter", "Sun" ]
+
       assert_equal nil, table.rows.first.previous, "previous of first Row"
       assert_equal "Mars", table.rows.last.previous[:planet], "previous"
+
+      assert_equal "Jupiter", table.rows.first.next[:planet], "next of first Row"
+      assert_equal nil, table.rows.last.next, "next"
     end
 
     def test_each_with_key

@@ -15,6 +15,7 @@ module Tabular
           gsub(/([a-z\d])([A-Z])/,'\1_\2').
           tr("-", "_").
           gsub(/ +/, "_").
+          gsub(";", "").
           downcase.
           to_sym
       rescue

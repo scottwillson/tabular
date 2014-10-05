@@ -78,6 +78,12 @@ module Tabular
       end
     end
 
+    # Next Row
+    def next
+      @table.rows[index + 1]
+    end
+
+    # Is this the last row?
     def last?
       index == @table.rows.size - 1
     end

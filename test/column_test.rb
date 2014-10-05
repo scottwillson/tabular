@@ -2,6 +2,8 @@ require "helper"
 
 module Tabular
   class ColumnTest < Test::Unit::TestCase
+    include Tabular::Blank
+
     def test_new_nil
       column = Column.new(nil, nil)
       assert_equal "", column.to_s, "blank column to_s"
@@ -83,6 +85,15 @@ module Tabular
     def test_to_space_delimited
       table = Table.new([[ "planet", "star" ]])
       assert_equal "planet", table.columns[:planet].to_space_delimited
+    end
+
+    def test_symbolize
+      mapper = ColumnMapper.new
+      assert_equal :place, mapper.symbolize(";place")
+      assert_equal :"#", mapper.symbolize("#")
+      assert_equal :"rider_#", mapper.symbolize("Rider #")
+      assert_equal :"cat.", mapper.symbolize("Cat.")
+      assert_equal :"team/club", mapper.symbolize("Team/Club")
     end
   end
 end
