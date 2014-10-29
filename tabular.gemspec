@@ -19,16 +19,18 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README",
     "Rakefile",
+    "lib/tabular/tables/file_reading.rb",
     "lib/tabular.rb",
     "lib/tabular/blank.rb",
     "lib/tabular/column.rb",
+    "lib/tabular/column_mapper.rb",
     "lib/tabular/columns.rb",
     "lib/tabular/keys.rb",
     "lib/tabular/renderer.rb",
     "lib/tabular/row.rb",
     "lib/tabular/table.rb",
-    "lib/tabular/zero.rb",
     "lib/tabular/version.rb",
+    "lib/tabular/zero.rb",
     "tabular.gemspec"
   ]
   s.homepage = "http://github.com/scottwillson/tabular"
