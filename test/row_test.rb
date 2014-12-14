@@ -159,6 +159,24 @@ module Tabular
       assert row.last?, "last?"
     end
 
+    def test_delete_blank_rows
+      table = Table.new([[ "planet", "star" ]])
+      table << [ "", "" ]
+      table << [ "Mars", "Sun" ]
+      table << [ "Jupiter", "Sun" ]
+      table << [ "", nil ]
+
+      table.delete_blank_rows!
+
+      assert_equal 2, table.rows.size, "rows"
+
+      assert_equal nil, table.rows[0].previous
+      assert_equal "Jupiter, Sun", table.rows[0].next.to_s
+
+      assert_equal "Mars, Sun", table.rows[1].previous.to_s
+      assert_equal nil, table.rows[1].next
+    end
+
     class StarRenderer
       def self.render(column, row)
         row[column.key].gsub(/\w/, "*")

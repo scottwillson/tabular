@@ -102,6 +102,13 @@ module Tabular
       end
     end
 
+    def delete_blank_rows!
+      @rows = rows.reject(&:blank?)
+      rows.each.with_index do |row, index|
+        row.index = index
+      end
+    end
+
     # Remove preceding and trailing whitespace from all cells. By default, Table does not
     # strip whitespace from cells.
     def strip!

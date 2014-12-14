@@ -6,7 +6,7 @@ module Tabular
     include Enumerable
     include Tabular::Keys
 
-    attr_reader :index
+    attr_accessor :index
     attr_reader :source
 
     # +table+ -- Table
