@@ -88,6 +88,10 @@ module Tabular
       index == @table.rows.size - 1
     end
 
+    def blank?
+      @array.all? { |cell| cell.nil? || cell == "" }
+    end
+
     # Tabluar::Columns
     def columns
       @table.columns
@@ -152,7 +156,7 @@ module Tabular
                   if date
                     @hash[column.key] = date
                   else
-                    raise ArgumentError, "'#{@array[index]}' is not a valid date"
+                    raise ArgumentError, "'#{column.key}' index #{index} #{@array[index]}' is not a valid date"
                   end
                 end
               end

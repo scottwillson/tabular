@@ -53,7 +53,7 @@ module Tabular
         cells = row
       end
 
-      if @columns.nil?
+      if @columns.nil? || @columns.size == 0
         @columns = Tabular::Columns.new(self, cells, column_mapper)
         if !cells.respond_to?(:keys)
           return columns
