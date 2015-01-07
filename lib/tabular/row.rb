@@ -4,6 +4,7 @@ module Tabular
   # Associate list of cells. Each Table has a list of Rows. Access Row cells via symbols. Ex: row[:city]
   class Row
     include Enumerable
+    include Tabular::Blank
     include Tabular::Keys
 
     attr_accessor :index
@@ -89,7 +90,7 @@ module Tabular
     end
 
     def blank?
-      @array.all? { |cell| cell.nil? || cell == "" }
+      @array.all? { |cell| is_blank?(cell) }
     end
 
     # Tabluar::Columns

@@ -161,7 +161,7 @@ module Tabular
 
     def test_delete_blank_rows
       table = Table.new([[ "planet", "star" ]])
-      table << [ "", "" ]
+      table << [ "", "   " ]
       table << [ "Mars", "Sun" ]
       table << [ "Jupiter", "Sun" ]
       table << [ "", nil ]
