@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
 
   s.authors = ["Scott Willson"]
   s.description = "Tabular is a Ruby library for reading, writing, and manipulating CSV, tab-delimited and Excel data."
-  s.email = "scott.willson@gmail.c0m"
+  s.email = "scott.willson@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README"
@@ -38,4 +38,5 @@ Gem::Specification.new do |s|
   s.summary = "Read, write, and manipulate CSV, tab-delimited and Excel data"
 
   s.add_development_dependency "roo", "~> 1.3"
+  s.add_development_dependency "roo-xls"
 end
