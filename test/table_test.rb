@@ -40,6 +40,12 @@ module Tabular
     def test_read_from_xlsx
       table = Table.read(File.new(File.expand_path(File.dirname(__FILE__) + "/fixtures/excel.xlsx")))
       assert_equal Date.new(2006, 1, 20), table[0][:date], "0.0"
+      table.strip!
+      assert_equal 97202, table[0][:zip], "integer field"
+      assert_equal "97202-1304", table[0][:"zip+4"], "integer field"
+      assert_equal 45296.700000000004, table[0][:start], "time field"
+      assert_equal "AZ314", table[0][:event_id], "alpha field"
+      assert_equal 15.75, table[0][:price], "decimal field"
     end
 
     def test_read_as

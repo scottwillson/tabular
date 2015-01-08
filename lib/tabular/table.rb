@@ -117,6 +117,8 @@ module Tabular
           value = row[column.key]
           if value.respond_to?(:strip)
             row[column.key] = value.strip
+          elsif value.is_a?(Float)
+            row[column.key] = strip_decimal(value)
           end
         end
       end
@@ -167,6 +169,14 @@ module Tabular
         options.first[:except]
       else
         []
+      end
+    end
+
+    def strip_decimal(value)
+      if value && value.to_i == value.to_f
+        value.to_i
+      else
+        value
       end
     end
   end

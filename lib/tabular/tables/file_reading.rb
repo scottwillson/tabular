@@ -54,9 +54,9 @@ module Tabular
 
       def read_spreadsheet(file_path, format)
         require "roo"
-        require "roo-xls"
 
         if format == :xls
+          require "roo-xls"
           excel = ::Roo::Excel.new(file_path)
         else
           excel = ::Roo::Excelx.new(file_path)
