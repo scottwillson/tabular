@@ -5,14 +5,17 @@ module Tabular
       # Assumes .txt = tab-delimited, .csv = CSV, .xls = Excel. Assumes first row is the header.
       # Normalizes column names to lower-case with underscores.
       # +format+ : :csv, :txt, or :xls
+      # +sheet+: integer, specifies the desired worksheet of an .xls/xlsx file, 0 by default.
       # Returns Array of Arrays
-      def read(file, format = nil)
+      def read(file, format = nil, sheet = nil)
         file_path = to_file_path(file)
         format ||= format_from(format, file_path)
 
         self.rows = case format
         when :xls, :xlsx
-          read_spreadsheet file_path, format
+          # Set to first sheet if undefined.
+          sheet ||= 0
+          read_spreadsheet file_path, format, sheet
         when :txt
           read_txt file_path
         when :csv
@@ -52,7 +55,7 @@ module Tabular
         file_path
       end
 
-      def read_spreadsheet(file_path, format)
+      def read_spreadsheet(file_path, format, sheet)
         require "roo"
 
         if format == :xls
@@ -64,7 +67,7 @@ module Tabular
 
         # Row#to_a coerces Excel data to Strings, but we want Dates and Numbers
         data = []
-        excel.sheet(0).each do |excel_row|
+        excel.sheet(sheet).each do |excel_row|
           data << excel_row.inject([]) { |row, cell| row << cell; row }
         end
         data

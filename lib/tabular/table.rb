@@ -13,7 +13,7 @@ module Tabular
 
     def self.read(file, options = {})
       table = Table.new
-      table.read file, options[:as]
+      table.read file, options[:as], options[:sheet]
       table
     end
 
