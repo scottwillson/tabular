@@ -1,21 +1,6 @@
 require 'rubygems'
 require 'rake'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "tabular"
-    gemspec.summary = "Read, write, and manipulate CSV, tab-delimited and Excel data"
-    gemspec.description = "Tabular is a Ruby library for reading, writing, and manipulating CSV, tab-delimited and Excel data."
-    gemspec.email = "scott.willson@gmail.cpm"
-    gemspec.homepage = "http://github.com/scottwillson/tabular"
-    gemspec.authors = ["Scott Willson"]
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install jeweler"
-end
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
