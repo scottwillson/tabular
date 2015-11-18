@@ -183,19 +183,23 @@ module Tabular
       month = parts[0].to_i
       day = parts[1].to_i
       year = parts[2].to_i
-      return unless month >=1 && month <= 12 && day >= 1 && day <= 31
+      return unless month >= 1 && month <= 12 && day >= 1 && day <= 31
 
-      if year == 0
-        year = 2000
-      elsif year > 0 && year < 69
-        year = 2000 + year
-      elsif year > 69 && year < 100
-        year = 1900 + year
-      elsif year < 1900 || year > 2050
-        return nil
-      end
+      year = add_century_to(year)
 
       Date.new(year, month, day)
+    end
+
+    def add_century_to(year)
+      if year >= 0 && year < 69
+        2000 + year
+      elsif year > 69 && year < 100
+        1900 + year
+      elsif year < 1900 || year > 2050
+        nil
+      else
+        year
+      end
     end
   end
 end
