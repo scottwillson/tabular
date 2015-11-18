@@ -64,8 +64,8 @@ module Tabular
     end
 
     def test_to_hash
-      table = Table.new([[ "planet", "star" ]])
-      row = Row.new(table, [ "Mars", "Sun" ])
+      table = Table.new([[ "planet", "star", "" ]])
+      row = Row.new(table, [ "Mars", "Sun", "" ])
       assert_equal({ :planet => "Mars", :star => "Sun"}, row.to_hash, "to_hash")
     end
 

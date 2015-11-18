@@ -62,7 +62,7 @@ There's basic test coverage. More comprehensive test coverage needs to be extrac
 
 Changes
 -------
-0.4.1 Refactor minor ugly things. No behavior changes.
+0.4.2 Refactor minor ugly things. No behavior changes.
 0.4.0 rchristensen: Add sheet argument to Table.read
 0.3.0 Revise Table creation methods to something sensible. Use Roo to read
       spreadsheets. Support for xlsx.

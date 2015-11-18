@@ -140,7 +140,9 @@ module Tabular
     def build_hash #:nodoc:
       _hash = Hash.new
       columns.each do |column|
-        _hash[column.key] = value_for_hash(column)
+        if column.key
+          _hash[column.key] = value_for_hash(column)
+        end
       end
       _hash
     end
