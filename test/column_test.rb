@@ -1,7 +1,7 @@
 require "helper"
 
 module Tabular
-  class ColumnTest < Test::Unit::TestCase
+  class ColumnTest < Minitest::Test
     include Tabular::Blank
 
     def test_new_nil

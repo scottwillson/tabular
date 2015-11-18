@@ -1,6 +1,6 @@
 require "helper"
 
-class ZeroTest < Test::Unit::TestCase
+class ZeroTest < Minitest::Test
   include Tabular::Zero
 
   def test_zero

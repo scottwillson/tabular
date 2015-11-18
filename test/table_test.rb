@@ -1,7 +1,7 @@
 require "helper"
 
 module Tabular
-  class TableTest < Test::Unit::TestCase
+  class TableTest < Minitest::Test
     def test_read_from_blank_txt_file
       Table.read(File.expand_path(File.dirname(__FILE__) + "/fixtures/blank.txt"))
     end

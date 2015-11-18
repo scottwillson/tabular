@@ -1,7 +1,7 @@
 require "helper"
 
 module Tabular
-  class ColumnsTest < Test::Unit::TestCase
+  class ColumnsTest < Minitest::Test
     def test_new_blank
       columns = Columns.new(nil, [])
       assert_equal false, columns.has_key?(:name), "has_key? :name"

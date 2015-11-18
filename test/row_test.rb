@@ -1,7 +1,7 @@
 require "helper"
 
 module Tabular
-  class RowTest < Test::Unit::TestCase
+  class RowTest < Minitest::Test
     def test_new
       row = Row.new(Table.new)
       assert_equal nil, row[:city], "[]"
@@ -122,7 +122,7 @@ module Tabular
     def test_invalid_date_raises_exception
       table = Table.new([[ "launched_date" ]])
       row = Row.new(table, [ "99/z/99" ])
-      assert_raise ArgumentError do
+      assert_raises ArgumentError do
         row[:launched_date]
       end
     end
