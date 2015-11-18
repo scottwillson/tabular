@@ -115,7 +115,7 @@ module Tabular
     def to_space_delimited
       _cells = []
 
-      hash.each do |key, value|
+      hash.each do |key, _|
         _cells << (render(key) || "").ljust(columns[key].width)
       end
 
