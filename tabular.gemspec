@@ -37,6 +37,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.summary = "Read, write, and manipulate CSV, tab-delimited and Excel data"
 
-  s.add_development_dependency "roo", "~> 1.3"
-  s.add_development_dependency "roo-xls"
+  s.add_development_dependency "roo", "~> 2.0"
+  s.add_development_dependency "roo-xls", "~> 0.0.1"
 end
