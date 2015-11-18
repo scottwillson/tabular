@@ -50,7 +50,7 @@ module Tabular
           file
         end
 
-        raise "Could not find '#{file_path}'" unless File.exists?(file_path)
+        raise "Could not find '#{file_path}'" unless File.exist?(file_path)
 
         file_path
       end
