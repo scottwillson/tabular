@@ -134,44 +134,58 @@ module Tabular
     protected
 
     def hash #:nodoc:
-      unless @hash
-        @hash = Hash.new
-        columns.each do |column|
-          index = columns.index(column.key)
-          if index
-            case column.column_type
-            when :boolean
-              @hash[column.key] = [1, "1", true, "true"].include?(@array[index])
-            when :date
-              if @array[index].is_a?(Date) || @array[index].is_a?(DateTime) || @array[index].is_a?(Time)
-                @hash[column.key] = @array[index]
-              else
-                begin
-                  if @array[index]
-                    @hash[column.key] = Date.parse(@array[index].to_s, true)
-                  else
-                    @hash[column.key] = nil
-                  end
-                rescue ArgumentError
-                  date = parse_invalid_date(@array[index])
-                  if date
-                    @hash[column.key] = date
-                  else
-                    raise ArgumentError, "'#{column.key}' index #{index} #{@array[index]}' is not a valid date"
-                  end
-                end
-              end
-            else
-              @hash[column.key] = @array[index]
-            end
-          end
-        end
+      @hash ||= build_hash
+    end
+
+    def build_hash #:nodoc:
+      _hash = Hash.new
+      columns.each do |column|
+        _hash[column.key] = value_for_hash(column)
       end
-      @hash
+      _hash
+    end
+
+    def value_for_hash(column) #:nodoc:
+      index = columns.index(column.key)
+      return nil unless index
+
+      value = @array[index]
+
+      case column.column_type
+      when :boolean
+        [ 1, "1", true, "true" ].include?(value)
+      when :date
+        if date?(value)
+          value
+        else
+          parse_date value, column.key, index
+        end
+      else
+        value
+      end
     end
 
 
     private
+
+    def date?(value)
+      value.is_a?(Date) || value.is_a?(DateTime) || value.is_a?(Time)
+    end
+
+    def parse_date(value, key, index)
+      return nil unless value
+
+      begin
+        Date.parse(value.to_s, true)
+      rescue ArgumentError
+        date = parse_invalid_date(value)
+        if date
+          date
+        else
+          raise ArgumentError, "'#{key}' index #{index} #{value}' is not a valid date"
+        end
+      end
+    end
 
     # Handle common m/d/yy case that Date.parse dislikes
     def parse_invalid_date(value)
