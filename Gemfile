@@ -1,6 +1,10 @@
 source "https://rubygems.org"
 
-gem "roo", github: "roo-rb/roo"
-gem "roo-xls", github: "roo-rb/roo-xls"
+git_source(:github) { |name| "https://github.com/#{name}.git" }
+
+gem "minitest", "~> 5.8"
+gem "rake", "~> 10.4"
+gem "roo-xls", "~> 0.0.1", github: "roo-rb/roo-xls", ref: "a316a88d042ca6e28a83c46a0db1906a9feebb62"
+gem "roo", "~> 2.0", github: "roo-rb/roo", ref: "12f3f7b1b9c7cc31cada36db360125531d408405"
 
 gemspec
