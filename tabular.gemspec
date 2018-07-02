@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "tabular.gemspec"
   ]
   s.homepage = "http://github.com/scottwillson/tabular"
+  s.license = "MIT"
   s.require_paths = ["lib"]
   s.summary = "Read, write, and manipulate CSV, tab-delimited and Excel data"
 end
