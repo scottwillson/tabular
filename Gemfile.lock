@@ -25,14 +25,14 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    mini_portile2 (2.3.0)
-    minitest (5.8.3)
-    nokogiri (1.8.3)
-      mini_portile2 (~> 2.3.0)
-    rake (10.4.2)
+    mini_portile2 (2.4.0)
+    minitest (5.11.3)
+    nokogiri (1.10.0)
+      mini_portile2 (~> 2.4.0)
+    rake (10.5.0)
     ruby-ole (1.2.12.1)
-    rubyzip (1.2.1)
-    spreadsheet (1.1.7)
+    rubyzip (1.2.2)
+    spreadsheet (1.1.8)
       ruby-ole (>= 1.0)
 
 PLATFORMS
@@ -46,4 +46,4 @@ DEPENDENCIES
   tabular!
 
 BUNDLED WITH
-   1.16.2
+   2.0.1
