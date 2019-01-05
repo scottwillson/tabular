@@ -1,4 +1,6 @@
-$:.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path("lib", __dir__)
 
 require "tabular/version"
 
@@ -9,9 +11,9 @@ Gem::Specification.new do |s|
   s.authors = ["Scott Willson"]
   s.description = "Tabular is a Ruby library for reading, writing, and manipulating CSV, tab-delimited and Excel data."
   s.email = "scott.willson@gmail.com"
-  s.extra_rdoc_files = [
-    "LICENSE",
-    "README"
+  s.extra_rdoc_files = %w[
+    LICENSE
+    README
   ]
   s.files = [
     "Gemfile",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   # The Table's header: a list of Columns.
   class Columns
@@ -28,9 +30,7 @@ module Tabular
     def set_columns(table = Table.new, names = [])
       index = 0
 
-      if names.respond_to?(:keys)
-        names = names.keys
-      end
+      names = names.keys if names.respond_to?(:keys)
 
       @columns = names.map do |name|
         new_column = Tabular::Column.new(table, self, name)
@@ -38,14 +38,23 @@ module Tabular
           @column_indexes[new_column.key] = index
           @columns_by_key[new_column.key] = new_column
         end
-        index = index + 1
+        index += 1
         new_column
       end
     end
 
+    def empty?
+      size == 0
+    end
+
+    # Deprecated
+    def has_key?(key)
+      key? key
+    end
+
     # Is the a Column with this key? Keys are lower-case, underscore symbols.
     # Example: :postal_code
-    def has_key?(key)
+    def key?(key)
       @columns.any? { |column| column.key == key }
     end
 
@@ -67,7 +76,7 @@ module Tabular
     # Add a new Column with +key+
     def <<(key)
       column = Column.new(@table, self, key)
-      unless is_blank?(column.key) || has_key?(key)
+      unless is_blank?(column.key) || key?(key)
         @column_indexes[column.key] = @columns.size
         @column_indexes[@columns.size] = column
         @columns_by_key[column.key] = column

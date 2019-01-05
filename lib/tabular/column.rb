@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   class Column
     attr_reader :key, :column_type
@@ -10,13 +12,13 @@ module Tabular
       @table = table
       @key = self.columns.column_mapper.map(key)
 
-      if @key && @key.to_s["date"]
-        @column_type = :date
-      elsif @key && @key.to_s[/\?\z/]
-        @column_type = :boolean
-      else
-        @column_type = :string
-      end
+      @column_type = if @key && @key.to_s["date"]
+                       :date
+                     elsif @key && @key.to_s[/\?\z/]
+                       :boolean
+                     else
+                       :string
+                     end
     end
 
     def rows
@@ -35,7 +37,7 @@ module Tabular
 
     # Number of zeros to the right of the decimal point. Useful for formtting time data.
     def precision
-      @precision ||= cells.map(&:to_f).map {|n| n.round(3) }.map {|n| n.to_s.split(".").last.gsub(/0+$/, "").length }.max
+      @precision ||= cells.map(&:to_f).map { |n| n.round(3) }.map { |n| n.to_s.split(".").last.gsub(/0+$/, "").length }.max
     end
 
     # Widest string in column
@@ -64,7 +66,6 @@ module Tabular
     def to_s
       key.to_s
     end
-
 
     protected
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   module Tables
     module FileReading
@@ -12,42 +14,38 @@ module Tabular
         format ||= format_from(format, file_path)
 
         self.rows = case format
-        when :xls, :xlsx
-          # Set to first sheet if undefined.
-          sheet ||= 0
-          read_spreadsheet file_path, format, sheet
-        when :txt
-          read_txt file_path
-        when :csv
-          read_csv file_path
-        else
-          raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
+                    when :xls, :xlsx
+                      # Set to first sheet if undefined.
+                      sheet ||= 0
+                      read_spreadsheet file_path, format, sheet
+                    when :txt
+                      read_txt file_path
+                    when :csv
+                      read_csv file_path
+                    else
+                      raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
         end
       end
 
       def format_from(as_option, file_path)
-        if as_option
-          as_option
-        else
-          case File.extname(file_path)
-          when ".xls"
-            :xls
-          when ".xlsx"
-            :xlsx
-          when ".txt"
-            :txt
-          when ".csv"
-            :csv
+        as_option || case File.extname(file_path)
+                     when ".xls"
+                       :xls
+                     when ".xlsx"
+                       :xlsx
+                     when ".txt"
+                       :txt
+                     when ".csv"
+                       :csv
           end
-        end
       end
 
       def to_file_path(file)
         file_path = case file
-        when File
-           file.path
-        else
-          file
+                    when File
+                      file.path
+                    else
+                      file
         end
 
         raise "Could not find '#{file_path}'" unless File.exist?(file_path)
@@ -68,7 +66,7 @@ module Tabular
         # Row#to_a coerces Excel data to Strings, but we want Dates and Numbers
         data = []
         excel.sheet(sheet).each do |excel_row|
-          data << excel_row.inject([]) { |row, cell| row << cell; row }
+          data << excel_row.each_with_object([]) { |cell, row| row << cell; }
         end
         data
       end

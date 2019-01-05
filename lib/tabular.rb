@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rubygems"
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")

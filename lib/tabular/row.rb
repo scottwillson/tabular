@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "date"
 
 module Tabular
@@ -38,7 +40,7 @@ module Tabular
 
     # Set cell value. Adds cell to end of Row and adds new Column if there is no Column for +key_
     def []=(key, value)
-      if columns.has_key?(key)
+      if columns.key?(key)
         @array[columns.index(key)] = value
       else
         @array << value
@@ -74,9 +76,7 @@ module Tabular
 
     # Previous Row
     def previous
-      if index > 0
-        @table.rows[index - 1]
-      end
+      @table.rows[index - 1] if index > 0
     end
 
     # Next Row
@@ -130,7 +130,6 @@ module Tabular
       @array.join(", ").to_s
     end
 
-
     protected
 
     def hash #:nodoc:
@@ -138,11 +137,9 @@ module Tabular
     end
 
     def build_hash #:nodoc:
-      _hash = Hash.new
+      _hash = {}
       columns.each do |column|
-        if column.key
-          _hash[column.key] = value_for_hash(column)
-        end
+        _hash[column.key] = value_for_hash(column) if column.key
       end
       _hash
     end
@@ -155,7 +152,7 @@ module Tabular
 
       case column.column_type
       when :boolean
-        [ 1, "1", true, "true" ].include?(value)
+        [1, "1", true, "true"].include?(value)
       when :date
         if date?(value)
           value
@@ -166,7 +163,6 @@ module Tabular
         value
       end
     end
-
 
     private
 
@@ -181,11 +177,7 @@ module Tabular
         Date.parse(value.to_s, true)
       rescue ArgumentError
         date = parse_invalid_date(value)
-        if date
-          date
-        else
-          raise ArgumentError, "'#{key}' index #{index} #{value}' is not a valid date"
-        end
+        date || raise(ArgumentError, "'#{key}' index #{index} #{value}' is not a valid date")
       end
     end
 

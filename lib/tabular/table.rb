@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   # Simple Enumerable list of Hashes. Use Table.read(file_path) to read file. Can also create a Table with Table.new. Either
   # pass in data or set options and then call row=.
@@ -47,17 +49,15 @@ module Tabular
     # To control how source data is added to the Table, use Table#mapper= to set a class that
     # implements map(row) and returns a Hash.
     def <<(row)
-      if row_mapper
-        cells = row_mapper.map(row)
-      else
-        cells = row
-      end
+      cells = if row_mapper
+                row_mapper.map(row)
+              else
+                row
+              end
 
-      if @columns.nil? || @columns.size == 0
+      if @columns.nil? || @columns.empty?
         @columns = Tabular::Columns.new(self, cells, column_mapper)
-        if !cells.respond_to?(:keys)
-          return columns
-        end
+        return columns unless cells.respond_to?(:keys)
       end
 
       _row = Tabular::Row.new(self, cells, row)
@@ -96,9 +96,7 @@ module Tabular
 
       (columns.map(&:key) - exceptions).each do |key|
         value = rows.first[key]
-        if rows.all? { |row| row[key] == value }
-          delete_column key
-        end
+        delete_column key if rows.all? { |row| row[key] == value }
       end
     end
 
@@ -142,9 +140,7 @@ module Tabular
     end
 
     def column_mapper=(mapper)
-      if rows.nil? || rows.size == 0
-        @columns = nil
-      end
+      @columns = nil if rows.nil? || rows.empty?
       @column_mapper = mapper
     end
 
@@ -154,13 +150,12 @@ module Tabular
     end
 
     def to_space_delimited
-      ([ columns ] + rows).map(&:to_space_delimited).join("\n") << "\n"
+      ([columns] + rows).map(&:to_space_delimited).join("\n") << "\n"
     end
 
     def to_s
       "#<#{self.class} #{rows.size}>"
     end
-
 
     private
 

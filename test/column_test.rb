@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "helper"
 
 module Tabular
@@ -32,18 +34,18 @@ module Tabular
 
     def test_cells
       data = [
-        { :place => "1", :name => "Bernard Hinault" },
-        { :place => "2", :name => "Greg Lemond" }
+        { place: "1", name: "Bernard Hinault" },
+        { place: "2", name: "Greg Lemond" }
       ]
       table = Table.new(data)
       column = table.columns[:place]
-      assert_equal [ "1", "2" ], column.cells
+      assert_equal %w[1 2], column.cells
     end
 
     def test_max
       data = [
-        { :place => "1", :name => "Bernard Hinault" },
-        { :place => "2", :name => "Greg Lemond" }
+        { place: "1", name: "Bernard Hinault" },
+        { place: "2", name: "Greg Lemond" }
       ]
       table = Table.new(data)
 
@@ -53,8 +55,8 @@ module Tabular
 
     def test_precision
       data = [
-        { :place => "1", :age => 22, :points => 10.75 },
-        { :place => "2", :age => 30, :points => 12.000 }
+        { place: "1", age: 22, points: 10.75 },
+        { place: "2", age: 30, points: 12.000 }
       ]
       table = Table.new(data)
 
@@ -65,7 +67,7 @@ module Tabular
 
     def test_precision_with_mixed_zeros
       data = [
-        { :place => "1", :age => 22, :points => 12.001 }
+        { place: "1", age: 22, points: 12.001 }
       ]
       table = Table.new(data)
       assert_equal 3, table.columns[:points].precision
@@ -73,8 +75,8 @@ module Tabular
 
     def test_width
       data = [
-        { :place => "1", :name => "Bernard Hinault" },
-        { :place => "2", :name => "Greg Lemond" }
+        { place: "1", name: "Bernard Hinault" },
+        { place: "2", name: "Greg Lemond" }
       ]
       table = Table.new(data)
 
@@ -83,7 +85,7 @@ module Tabular
     end
 
     def test_to_space_delimited
-      table = Table.new([[ "planet", "star" ]])
+      table = Table.new([%w[planet star]])
       assert_equal "planet", table.columns[:planet].to_space_delimited
     end
 

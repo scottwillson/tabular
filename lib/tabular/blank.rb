@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   # Don't mess with Object
   module Blank

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tabular
   # Custom display of cells. By default, return to_s.
   #

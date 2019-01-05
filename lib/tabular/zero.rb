@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 module Tabular
   module Zero
     def is_zero?(object)
-      if object.respond_to?(:zero?)
-        return object.zero?
-      end
-  
+      return object.zero? if object.respond_to?(:zero?)
+
       case object
       when NilClass, FalseClass, TrueClass
         false
