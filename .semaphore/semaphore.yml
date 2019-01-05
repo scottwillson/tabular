@@ -6,18 +6,12 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: "Checkout code"
-    task:
-      jobs:
-      - name: checkout code from Github
-        commands:
-          - checkout
-
   - name: "Bundle"
     task:
       jobs:
       - name: bundle gems
         commands:
+          - checkout
           - bundle
 
   - name: "Run tests"
