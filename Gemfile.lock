@@ -39,6 +39,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (>= 2.0)
   minitest (~> 5.8)
   rake (~> 10.4)
   roo (~> 2.0)!
