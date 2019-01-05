@@ -54,6 +54,11 @@ module Tabular
       @array.each(&block)
     end
 
+    # Call +block+ for each key
+    def each_key(&block)
+      keys.each(&block)
+    end
+
     # Call +block+ for each cell
     def each_with_key(&block)
       hash.each(&block)
@@ -115,7 +120,7 @@ module Tabular
     def to_space_delimited
       cells = []
 
-      hash.each do |key, _|
+      hash.each_key do |key|
         cells << (render(key) || "").ljust(columns[key].width)
       end
 

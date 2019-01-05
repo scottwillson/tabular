@@ -58,7 +58,7 @@ module Tabular
       end
 
       new_row = Tabular::Row.new(self, cells, row)
-      new_row.keys.each do |key|
+      new_row.each_key do |key|
         columns << key
       end
       rows << new_row
