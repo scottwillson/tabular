@@ -66,7 +66,7 @@ module Tabular
       assert_equal "Hinault", table.rows.first[:name], ":name"
       assert_equal "Team Z", table.rows.first[:team], ":team"
       assert_equal true, table.rows.first[:homme?], "boolean"
-     end
+    end
 
     def test_new_with_hashes
       data = [
@@ -232,12 +232,15 @@ module Tabular
                           ["Hinault", "", "true", "30"]
                         ])
 
-      expected = <<~END
+      # rubocop:disable Layout/TrailingWhitespace
+      expected = <<~TABLE
         nom       equipe   homme   age
         Hinault            true    30 
         Lemond             true    20 
         Hinault            true    30 
-      END
+      TABLE
+      # rubocop:enable Layout/TrailingWhitespace
+
       assert_equal expected, table.to_space_delimited
     end
 
@@ -266,16 +269,16 @@ module Tabular
 
     class TestColumnsMapper < ColumnMapper
       def map(key)
-        _key = case key
-               when "nom"
-                 :name
-               when "equipe"
-                 :team
-               when "homme"
-                 :homme?
-        end
+        symbol_key = case key
+                     when "nom"
+                       :name
+                     when "equipe"
+                       :team
+                     when "homme"
+                       :homme?
+                     end
 
-        super _key
+        super symbol_key
       end
     end
   end

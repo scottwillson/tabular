@@ -9,9 +9,8 @@ module Tabular
     include Tabular::Tables::FileReading
     include Tabular::Zero
 
-    attr_accessor :column_mapper
     attr_accessor :row_mapper
-    attr_reader   :rows
+    attr_reader :column_mapper
 
     def self.read(file, options = {})
       table = Table.new
@@ -31,13 +30,11 @@ module Tabular
 
     # Set table rows. Calls row <<, which creates columns and links the source rows to Row#source.
     def rows=(source_rows = [])
-      return [] unless source_rows
+      return unless source_rows
 
       source_rows.each do |row|
         self.<< row
       end
-
-      rows
     end
 
     # Return Row at zero-based index, or nil if Row is out of bounds
@@ -60,12 +57,12 @@ module Tabular
         return columns unless cells.respond_to?(:keys)
       end
 
-      _row = Tabular::Row.new(self, cells, row)
-      _row.keys.each do |key|
+      new_row = Tabular::Row.new(self, cells, row)
+      new_row.keys.each do |key|
         columns << key
       end
-      rows << _row
-      _row
+      rows << new_row
+      new_row
     end
 
     def inspect
@@ -78,21 +75,21 @@ module Tabular
     end
 
     # Remove all columns that only contain a blank string, zero, or nil
-    def delete_blank_columns!(*_options)
-      exceptions = extract_exceptions(_options)
+    def delete_blank_columns!(*options)
+      exceptions = extract_exceptions(options)
 
       (columns.map(&:key) - exceptions).each do |key|
-        if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) }
+        if rows.all? { |row| is_blank?(row[key]) || is_zero?(row[key]) } # rubocop:disable Style/IfUnlessModifier
           delete_column key
         end
       end
     end
 
     # Remove all columns that contain the same value in all rows
-    def delete_homogenous_columns!(*_options)
+    def delete_homogenous_columns!(*options)
       return if rows.size < 2
 
-      exceptions = extract_exceptions(_options)
+      exceptions = extract_exceptions(options)
 
       (columns.map(&:key) - exceptions).each do |key|
         value = rows.first[key]

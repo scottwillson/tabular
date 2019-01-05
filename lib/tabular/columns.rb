@@ -7,8 +7,8 @@ module Tabular
     include Tabular::Blank
     include Tabular::Keys
 
-    attr_accessor :column_mapper
-    attr_accessor :renderer
+    attr_writer :column_mapper
+    attr_writer :renderer
 
     # +table+ -- Table
     # +data+ -- array of header names
@@ -44,11 +44,11 @@ module Tabular
     end
 
     def empty?
-      size == 0
+      size.zero?
     end
 
     # Deprecated
-    def has_key?(key)
+    def has_key?(key) # rubocop:disable Naming/PredicateName
       key? key
     end
 
@@ -76,12 +76,12 @@ module Tabular
     # Add a new Column with +key+
     def <<(key)
       column = Column.new(@table, self, key)
-      unless is_blank?(column.key) || key?(key)
-        @column_indexes[column.key] = @columns.size
-        @column_indexes[@columns.size] = column
-        @columns_by_key[column.key] = column
-        @columns << column
-      end
+      return if is_blank?(column.key) || key?(key)
+
+      @column_indexes[column.key] = @columns.size
+      @column_indexes[@columns.size] = column
+      @columns_by_key[column.key] = column
+      @columns << column
     end
 
     def delete(key)

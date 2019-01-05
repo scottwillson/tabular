@@ -76,7 +76,7 @@ module Tabular
 
     # Previous Row
     def previous
-      @table.rows[index - 1] if index > 0
+      @table.rows[index - 1] if index.positive?
     end
 
     # Next Row
@@ -113,13 +113,13 @@ module Tabular
     end
 
     def to_space_delimited
-      _cells = []
+      cells = []
 
       hash.each do |key, _|
-        _cells << (render(key) || "").ljust(columns[key].width)
+        cells << (render(key) || "").ljust(columns[key].width)
       end
 
-      _cells.join "   "
+      cells.join "   "
     end
 
     def inspect
@@ -137,11 +137,11 @@ module Tabular
     end
 
     def build_hash #:nodoc:
-      _hash = {}
+      hash = {}
       columns.each do |column|
-        _hash[column.key] = value_for_hash(column) if column.key
+        hash[column.key] = value_for_hash(column) if column.key
       end
-      _hash
+      hash
     end
 
     def value_for_hash(column) #:nodoc:

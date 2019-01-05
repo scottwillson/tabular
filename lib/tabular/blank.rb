@@ -3,7 +3,7 @@
 module Tabular
   # Don't mess with Object
   module Blank
-    def is_blank?(object)
+    def is_blank?(object) # rubocop:disable Naming/PredicateName
       case object
       when NilClass
         true

@@ -11,10 +11,16 @@ LineLength:
   Max: 160
 
 Metrics/AbcSize:
-  Max: 30
+  Max: 40
 
 Metrics/ClassLength:
   Max: 200
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 8
 
 MethodLength:
   Max: 20

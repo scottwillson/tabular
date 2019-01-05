@@ -74,8 +74,8 @@ module Tabular
     def test_inspect
       table = Table.new([%w[planet star]])
       row = Row.new(table, %w[Mars Sun])
-      assert_match /:planet=>"Mars"/, row.inspect, "inspect"
-      assert_match /:star=>"Sun"/, row.inspect, "inspect"
+      assert_match(/:planet=>"Mars"/, row.inspect, "inspect")
+      assert_match(/:star=>"Sun"/, row.inspect, "inspect")
     end
 
     def test_to_s

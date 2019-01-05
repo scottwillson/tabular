@@ -24,7 +24,7 @@ module Tabular
                       read_csv file_path
                     else
                       raise "Cannot read '#{format}' format. Expected :xls, :xlsx, :txt, or :csv"
-        end
+                    end
       end
 
       def format_from(as_option, file_path)
@@ -37,7 +37,7 @@ module Tabular
                        :txt
                      when ".csv"
                        :csv
-          end
+                     end
       end
 
       def to_file_path(file)
@@ -46,7 +46,7 @@ module Tabular
                       file.path
                     else
                       file
-        end
+                    end
 
         raise "Could not find '#{file_path}'" unless File.exist?(file_path)
 
