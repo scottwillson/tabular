@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
+ruby "~> 2.6.0"
+
 git_source(:github) { |name| "https://github.com/#{name}.git" }
 
 gem "minitest", "~> 5.8"
