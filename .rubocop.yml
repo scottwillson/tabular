@@ -7,5 +7,17 @@ Documentation:
 Layout/SpaceInsidePercentLiteralDelimiters:
   Enabled: false
 
+LineLength:
+  Max: 160
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 200
+
+MethodLength:
+  Max: 20
+
 StringLiterals:
   EnforcedStyle: double_quotes
