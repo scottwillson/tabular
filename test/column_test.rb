@@ -7,7 +7,7 @@ module Tabular
     def test_new_nil
       column = Column.new(nil, nil)
       assert_equal "", column.to_s, "blank column to_s"
-      assert_equal nil, column.key, "blank column key"
+      assert_nil column.key, "blank column key"
     end
 
     def test_new

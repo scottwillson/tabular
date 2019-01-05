@@ -4,7 +4,7 @@ module Tabular
   class RowTest < Minitest::Test
     def test_new
       row = Row.new(Table.new)
-      assert_equal nil, row[:city], "[]"
+      assert_nil row[:city], "[]"
 
       assert_equal "", row.join, "join"
       assert_equal({}, row.to_hash, "to_hash")
@@ -17,7 +17,7 @@ module Tabular
 
     def test_new_from_hash
       row = Row.new(Table.new, { :place => "1" })
-      assert_equal nil, row[:city], "[]"
+      assert_nil row[:city], "[]"
 
       assert_equal "1", row.join, "join"
       assert_equal({ :place => "1" }, row.to_hash, "to_hash")
@@ -30,7 +30,7 @@ module Tabular
 
     def test_new_from_hash_with_string_keys
       row = Row.new(Table.new, { "place" => "1" })
-      assert_equal nil, row[:city], "[]"
+      assert_nil row[:city], "[]"
 
       assert_equal "1", row.join, "join"
       assert_equal({ :place => "1" }, row.to_hash, "to_hash")
@@ -102,11 +102,11 @@ module Tabular
       table << [ "Mars", "Sun" ]
       table << [ "Jupiter", "Sun" ]
 
-      assert_equal nil, table.rows.first.previous, "previous of first Row"
+      assert_nil table.rows.first.previous, "previous of first Row"
       assert_equal "Mars", table.rows.last.previous[:planet], "previous"
 
       assert_equal "Jupiter", table.rows.first.next[:planet], "next of first Row"
-      assert_equal nil, table.rows.last.next, "next"
+      assert_nil table.rows.last.next, "next"
     end
 
     def test_each_with_key
@@ -170,11 +170,11 @@ module Tabular
 
       assert_equal 2, table.rows.size, "rows"
 
-      assert_equal nil, table.rows[0].previous
+      assert_nil table.rows[0].previous
       assert_equal "Jupiter, Sun", table.rows[0].next.to_s
 
       assert_equal "Mars, Sun", table.rows[1].previous.to_s
-      assert_equal nil, table.rows[1].next
+      assert_nil table.rows[1].next
     end
 
     class StarRenderer

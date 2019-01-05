@@ -5,10 +5,10 @@ module Tabular
     def test_new_blank
       columns = Columns.new(nil, [])
       assert_equal false, columns.has_key?(:name), "has_key? :name"
-      assert_equal nil, columns[:name], "[:name]"
-      assert_equal nil, columns.index(nil), "index"
-      assert_equal nil, columns.index(""), "index"
-      assert_equal nil, columns.index(:name), "index"
+      assert_nil columns[:name], "[:name]"
+      assert_nil columns.index(nil), "index"
+      assert_nil columns.index(""), "index"
+      assert_nil columns.index(:name), "index"
       columns.each { |c| c.nil? }
     end
 
