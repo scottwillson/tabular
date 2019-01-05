@@ -6,17 +6,12 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: "Bundle"
-    task:
-      jobs:
-      - name: bundle gems
-        commands:
-          - checkout
-          - bundle
-
   - name: "Run tests"
     task:
       jobs:
       - name: tests
         commands:
+          - checkout
+          - gem install bundler:2.0.1
+          - bundle
           - bundle exec rake
