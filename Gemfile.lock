@@ -17,6 +17,14 @@ GIT
       nokogiri
       rubyzip (>= 1.0.0)
 
+GIT
+  remote: https://github.com/rubysec/bundler-audit.git
+  revision: 8db8545169195e5ddd539562894ef2a560fe42b7
+  specs:
+    bundler-audit (0.6.0)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 0.18)
+
 PATH
   remote: .
   specs:
@@ -34,12 +42,14 @@ GEM
     rubyzip (1.2.2)
     spreadsheet (1.1.8)
       ruby-ole (>= 1.0)
+    thor (0.20.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (>= 2.0)
+  bundler-audit!
   minitest (~> 5.8)
   rake (~> 10.4)
   roo (~> 2.0)!
