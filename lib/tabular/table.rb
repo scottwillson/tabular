@@ -21,6 +21,7 @@ module Tabular
     # Pass data in as +rows+. Expects rows to be an Enumerable of Enumerables.
     # Maps rows to Hash-like Tabular::Rows.
     def initialize(rows = [])
+      @columns = nil
       self.rows = rows
     end
 

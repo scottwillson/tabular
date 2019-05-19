@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    tabular (0.4.5)
+    tabular (0.4.6)
 
 GEM
   remote: https://rubygems.org/

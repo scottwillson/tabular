@@ -19,6 +19,7 @@ module Tabular
 
     def initialize(table = Table.new, names = [], column_mapper = nil)
       @table = table
+      @renderer = nil
       self.column_mapper = column_mapper
 
       @column_indexes = {}
@@ -99,7 +100,7 @@ module Tabular
       @columns.size
     end
 
-    # Renderer for Column +key+. Default to Table#renderer.
+    # Renderer for Column +key+. Default to Table#Renderer.
     def renderer(key)
       renderers[key] || @renderer || Renderer
     end
