@@ -1,29 +1,18 @@
 GIT
-  remote: https://github.com/roo-rb/roo-xls.git
-  revision: a316a88d042ca6e28a83c46a0db1906a9feebb62
-  ref: a316a88d042ca6e28a83c46a0db1906a9feebb62
-  specs:
-    roo-xls (0.0.1)
-      nokogiri
-      roo (>= 2.0.0)
-      spreadsheet (> 0.9.0)
-
-GIT
-  remote: https://github.com/roo-rb/roo.git
-  revision: 12f3f7b1b9c7cc31cada36db360125531d408405
-  ref: 12f3f7b1b9c7cc31cada36db360125531d408405
-  specs:
-    roo (2.0.0)
-      nokogiri
-      rubyzip (>= 1.0.0)
-
-GIT
   remote: https://github.com/rubysec/bundler-audit.git
-  revision: 8db8545169195e5ddd539562894ef2a560fe42b7
+  revision: c3fe695f38d98138d306ef31df1decd2adc819b3
   specs:
-    bundler-audit (0.6.0)
+    bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 0.18)
+
+GIT
+  remote: https://github.com/scottwillson/roo.git
+  revision: 7affb556878466faf1a476f2ed5802f6af5b1066
+  specs:
+    roo (2.8.2)
+      nokogiri (~> 1)
+      rubyzip (>= 1.2.1, < 2.0.0)
 
 PATH
   remote: .
@@ -35,12 +24,16 @@ GEM
   specs:
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    nokogiri (1.10.0)
+    nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
     rake (10.5.0)
-    ruby-ole (1.2.12.1)
+    roo-xls (1.2.0)
+      nokogiri
+      roo (>= 2.0.0, < 3)
+      spreadsheet (> 0.9.0)
+    ruby-ole (1.2.12.2)
     rubyzip (1.2.2)
-    spreadsheet (1.1.8)
+    spreadsheet (1.2.3)
       ruby-ole (>= 1.0)
     thor (0.20.3)
 
@@ -52,8 +45,8 @@ DEPENDENCIES
   bundler-audit!
   minitest (~> 5.8)
   rake (~> 10.4)
-  roo (~> 2.0)!
-  roo-xls (~> 0.0.1)!
+  roo!
+  roo-xls
   tabular!
 
 RUBY VERSION

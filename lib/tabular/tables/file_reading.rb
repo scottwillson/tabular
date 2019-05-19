@@ -66,7 +66,7 @@ module Tabular
         # Row#to_a coerces Excel data to Strings, but we want Dates and Numbers
         data = []
         excel.sheet(sheet).each do |excel_row|
-          data << excel_row.each_with_object([]) { |cell, row| row << cell; }
+          data << excel_row.each_with_object([]) { |cell, row| row << cell }
         end
         data
       end
