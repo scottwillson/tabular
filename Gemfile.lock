@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/rubysec/bundler-audit.git
-  revision: c3fe695f38d98138d306ef31df1decd2adc819b3
-  specs:
-    bundler-audit (0.6.1)
-      bundler (>= 1.2.0, < 3)
-      thor (~> 0.18)
-
-GIT
   remote: https://github.com/scottwillson/roo.git
   revision: 7affb556878466faf1a476f2ed5802f6af5b1066
   specs:
@@ -22,11 +14,14 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    bundler-audit (0.6.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 0.18)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
-    rake (10.5.0)
+    rake (12.3.2)
     roo-xls (1.2.0)
       nokogiri
       roo (>= 2.0.0, < 3)
@@ -42,9 +37,9 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (>= 2.0)
-  bundler-audit!
-  minitest (~> 5.8)
-  rake (~> 10.4)
+  bundler-audit
+  minitest
+  rake
   roo!
   roo-xls
   tabular!
